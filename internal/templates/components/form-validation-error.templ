@@ -1,0 +1,18 @@
+package components
+
+import "github.com/secretium/secretium/internal/messages"
+
+templ FormValidationError(errs []*messages.ErrorField) {
+	<div class="banner state-error">
+		<p>
+			&#9888;&nbsp;Please correct the following error(s) and try again:
+		</p>
+		<ul>
+			for _, err := range errs {
+				<li>
+					&mdash;&nbsp;<strong>{ err.Name }</strong>: { err.Message }
+				</li>
+			}
+		</ul>
+	</div>
+}

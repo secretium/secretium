@@ -1,0 +1,33 @@
+{
+    "name": "The PWA for sharing secrets",
+    "short_name": "secret-sharer",
+    "description": "The PWA (Progressive Web App) for sharing secrets with your friends.",
+    "background_color": "#FEFEF5",
+    "theme_color": "#FEFEF5",
+    "display": "standalone",
+    "orientation": "portrait",
+    "start_url": ".",
+    "icons": [
+        {
+            "src": "manifest-touch-icon.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "manifest-desktop-screenshot.jpeg",
+            "sizes": "1280x720",
+            "type": "image/jpeg",
+            "form_factor": "wide",
+            "label": "Desktop homescreen"
+        },
+        {
+            "src": "manifest-mobile-screenshot.jpeg",
+            "sizes": "720x1280",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Mobile homescreen"
+        }
+    ]
+}

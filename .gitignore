@@ -28,8 +28,23 @@ vendor/
 # Binary directories
 bin/
 
+# Node modules
+node_modules/
+bun.lockb
+
+# Stylesheets
+internal/attachments/static_files/*.min.css
+
 # GoReleaser directories
 dist/
 
 # Temp directories
+.cache/
 tmp/
+
+# SQLite database folder
+secret-sharer-data/
+
+# REST Client files
+*.http
+*.rest

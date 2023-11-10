@@ -20,6 +20,12 @@ jobs:
       - name: Fetch tags
         run: git fetch --force --tags
 
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Minify JS scripts & CSS styles with Bun
+        run: bun run build
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:

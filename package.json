@@ -1,0 +1,17 @@
+{
+  "name": "secretium",
+  "version": "1.0.0",
+  "description": "Frontend part with Tailwind CSS of the Secretium project.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "minify:js": "bunx terser ./assets/scripts.js -o ./internal/attachments/static_files/js/scripts.min.js -c -m",
+    "minify:css": "bunx tailwindcss -i ./assets/styles.css -o ./internal/attachments/static_files/css/styles.min.css --minify",
+    "watch": "bunx tailwindcss -i ./assets/styles.css -o ./internal/attachments/static_files/css/styles.min.css --watch",
+    "build": "minify:js && minify:css"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "latest",
+    "@tailwindcss/typography": "latest",
+    "tailwindcss": "latest"
+  }
+}

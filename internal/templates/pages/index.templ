@@ -1,0 +1,80 @@
+package pages
+
+templ Index() {
+	<section>
+		<h1>Login</h1>
+		<p>&#128521;&nbsp;Ready to create a new secret? Please login to your account.</p>
+		<form
+ 			hx-post="/api/user/login"
+ 			hx-target-400="#errors"
+ 			hx-target-401="#errors"
+ 			hx-target-403="#errors"
+ 			hx-target-404="#errors"
+ 			hx-target-500="#errors"
+ 			hx-indicator="#loading-indicator"
+		>
+			<div>
+				<p>
+					<label for="username">
+						Username <span class="text-red-500" title="Required">&#10033;</span>
+					</label>
+				</p>
+				<input
+ 					id="username"
+ 					class="w-full"
+ 					inputmode="text"
+ 					minlength="3"
+ 					maxlength="16"
+ 					type="text"
+ 					name="username"
+ 					placeholder="Enter username"
+ 					autocomplete="off"
+ 					autofocus
+ 					required
+				/>
+				<div class="help-text">
+					Username must be at least 4 characters and at most 16.
+				</div>
+			</div>
+			<div>
+				<p>
+					<label for="master_password">
+						Master password <span class="text-red-500" title="Required">&#10033;</span>
+					</label>
+				</p>
+				<input
+ 					id="master_password"
+ 					class="w-full"
+ 					inputmode="text"
+ 					minlength="8"
+ 					maxlength="32"
+ 					type="password"
+ 					name="master_password"
+ 					placeholder="Enter master password"
+ 					autocomplete="off"
+ 					required
+				/>
+				<div class="help-text">
+					Master password must be at least 8 characters and at most 16.
+				</div>
+			</div>
+			<div id="errors"></div>
+			<button class="w-full mt-4" id="loading-indicator" type="submit">
+				<svg
+ 					class="animate-spin h-6 w-6 text-white loader"
+ 					xmlns="http://www.w3.org/2000/svg"
+ 					fill="none"
+ 					viewBox="0 0 24 24"
+				>
+					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+					<path
+ 						class="opacity-75"
+ 						fill="currentColor"
+ 						d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+					></path>
+				</svg>
+				<span class="loader-text">&#10003;&nbsp;Login to account</span>
+			</button>
+		</form>
+	</section>
+}

@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* User styles */
+
+@layer base {
+
+    /* Body */
+
+    body {
+        @apply bg-yellow-50 antialiased font-sans box-border dark:bg-slate-800;
+    }
+
+    /* HTML elements */
+
+    a {
+        @apply underline-offset-2 decoration-1 cursor-pointer;
+    }
+
+    pre {
+        @apply whitespace-pre-line break-words;
+    }
+
+    label {
+        @apply font-bold;
+    }
+
+    /* Article */
+
+    article {
+        @apply grid gap-10 mx-2 my-4 sm:mx-4 sm:my-8 place-items-center;
+    }
+
+    /* Header */
+
+    header {
+        @apply w-full grid place-items-center;
+    }
+
+    /* Main */
+
+    main {
+        @apply prose prose-slate prose-p:my-4 prose-img:my-0 prose-headings:mt-4 hover:prose-a:no-underline bg-white p-4 sm:p-8 rounded-3xl shadow-2xl shadow-amber-400/30 dark:prose-invert dark:bg-slate-900 dark:shadow-slate-600/30 dark:prose-pre:bg-slate-700 dark:prose-pre:text-slate-300;
+    }
+
+    main.index,
+    main.secret {
+        @apply w-full sm:min-w-[38rem];
+    }
+
+    main.dashboard {
+        @apply w-full sm:min-w-[64rem];
+    }
+
+    /* Footer */
+
+    footer {
+        @apply grid sm:flex sm:flex-row gap-8 items-center text-sm text-amber-400 hover:text-amber-300 dark:text-slate-400 dark:hover:text-slate-300;
+    }
+
+    footer .copyright-text {
+        @apply sm:flex-auto;
+    }
+
+    footer .copyright-links {
+        @apply sm:flex-none;
+    }
+
+    footer a {
+        @apply text-amber-400 underline hover:text-amber-300 hover:no-underline dark:text-slate-400 dark:hover:text-slate-300;
+    }
+
+    footer p {
+        @apply mb-4;
+    }
+
+    footer.index,
+    footer.secret {
+        @apply w-full sm:w-[38rem];
+    }
+
+    footer.dashboard {
+        @apply w-full sm:w-[62rem];
+    }
+
+    /* Form */
+
+    form {
+        @apply grid w-full;
+    }
+
+    /* Inputs */
+
+    input,
+    input[type="text"],
+    input[type="password"],
+    textarea,
+    select {
+        @apply py-3 px-4 text-base bg-white text-slate-600 border-blue-400 border-2 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 dark:bg-slate-800 dark:text-slate-400;
+    }
+
+    input[type="checkbox"] {
+        @apply p-3 text-base bg-white text-slate-600 border-blue-400 border-2 rounded-md focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 dark:bg-slate-800 dark:text-slate-400;
+    }
+
+    /* Textarea */
+
+    textarea {
+        @apply w-full font-mono;
+    }
+
+    /* Buttons */
+
+    button[type="submit"] {
+        @apply grid place-items-center py-3 px-4 mt-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-400;
+    }
+
+    /* Help text */
+
+    .help-text {
+        @apply mt-2 text-sm italic;
+    }
+
+    /* Banners */
+
+    .banner {
+        @apply py-2 px-4 text-sm rounded-lg;
+    }
+
+    .banner.state-success {
+        @apply mb-4 bg-green-200 dark:bg-green-600/40;
+    }
+
+    .banner.state-warning {
+        @apply mb-4 bg-yellow-200 dark:bg-yellow-600/40;
+    }
+
+    .banner.state-error {
+        @apply mt-4 bg-red-200 dark:bg-red-600/40;
+    }
+
+    .banner.state-error ul {
+        @apply list-none list-inside pl-1;
+    }
+
+    /* Promotion link banner */
+
+    a.promotion-banner {
+        @apply block max-w-fit py-2 px-4 text-white no-underline rounded-lg bg-gradient-to-r from-amber-300 to-red-300 hover:text-white hover:from-red-400 hover:to-amber-400 dark:from-blue-900 dark:to-cyan-900 dark:hover:from-cyan-800 dark:hover:to-blue-800;
+    }
+
+    /* Links */
+
+    a.new-tab-link {
+        @apply after:content-['_↗'];
+    }
+
+    a.add-secret {
+        @apply max-w-max py-2 px-4 text-sm text-white font-bold no-underline rounded-full sm:mb-5 sm:self-end sm:justify-self-end bg-blue-600 hover:bg-blue-400;
+    }
+
+    a.share-secret {
+        @apply text-green-600 hover:text-green-400;
+    }
+
+    a.renew-secret {
+        @apply text-yellow-600 hover:text-yellow-400;
+    }
+
+    a.delete-secret {
+        @apply text-red-600 hover:text-red-400;
+    }
+
+    a.user-logout {
+        @apply text-slate-400 hover:text-slate-200 dark:text-slate-600 dark:hover:text-slate-400;
+    }
+
+    /* Copy to clipboard */
+
+    .copy-to-clipboard {
+        @apply flex gap-2 items-center p-3 my-2 rounded-lg font-mono cursor-pointer bg-slate-900 dark:bg-slate-700;
+    }
+
+    .copy-to-clipboard input[type="text"] {
+        @apply w-full p-0 border-none outline-none bg-transparent text-slate-300;
+    }
+
+    /* Loader */
+
+    .loader {
+        @apply hidden;
+    }
+
+    .htmx-request .loader {
+        @apply block;
+    }
+
+    .htmx-request.loader {
+        @apply block;
+    }
+
+    .htmx-request .loader-text {
+        @apply hidden;
+    }
+
+    .htmx-request.loader-text {
+        @apply hidden;
+    }
+}

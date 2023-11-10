@@ -1,5 +1,13 @@
-module github.com/koddr/PROJECT
+module github.com/secretium/secretium
 
 go 1.21
 
-require github.com/google/wire v0.5.0
+require (
+	github.com/a-h/templ v0.2.432
+	github.com/boombuler/barcode v1.0.1
+	github.com/golang-jwt/jwt/v5 v5.1.0
+	github.com/google/wire v0.5.0
+	github.com/jmoiron/sqlx v1.3.5
+	github.com/julienschmidt/httprouter v1.3.0
+	github.com/mattn/go-sqlite3 v1.14.18
+)
