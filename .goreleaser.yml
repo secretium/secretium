@@ -1,0 +1,221 @@
+project_name: project
+report_sizes: true
+
+env_files:
+  github_token: ~/.github_token
+
+before:
+  hooks:
+    - go mod download
+    - go mod tidy
+    - go run github.com/google/wire/cmd/wire@latest ./...
+    - go run golang.org/x/vuln/cmd/govulncheck@latest -test ./...
+    - go run github.com/google/osv-scanner/cmd/osv-scanner@latest -r .
+    - go run github.com/securego/gosec/v2/cmd/gosec@latest -exclude=G204 -quiet ./...
+    - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
+    - go run github.com/gordonklaus/ineffassign@latest ./...
+    - go test -race ./...
+
+builds:
+  -
+    id: default
+    env: [ CGO_ENABLED=0 ]
+    goos: [ linux, windows, darwin ]
+    goarch: [ amd64, arm64 ]
+
+upx:
+  -
+    ids: [ default ]
+    enabled: true
+    compress: best
+    lzma: true
+    brute: true
+    goos: [ linux ] # skip windows and darwin (macOS 13.x Ventura is not supported now)
+    goarch: [ amd64, arm64 ]
+
+release:
+  ids: [ default ]
+  draft: true
+  replace_existing_draft: true
+  target_commitish: '{{ .Commit }}'
+  prerelease: auto
+  mode: replace
+  header: |
+    ## ✨ The {{ .ProjectName }} `{{ .Tag }}` release
+  footer: |
+    ## How to update?
+
+    For native Go installation (any platforms):
+
+    ```console
+    go install github.com/koddr/project@latest
+    ```
+
+    For [Homebrew][brew_url] users (GNU/Linux, Apple macOS):
+
+    ```console
+    brew upgrade gowebly/tap/project
+    ```
+
+    For [Docker][docker_url] users (GNU/Linux only):
+
+    ```console
+    docker pull koddr/project:latest
+    ```
+
+    For other ways (any platforms): manually download and re-install a ready-made package from the `Assets` section.
+
+    > 💡 Note: See the [Complete user guide][project_url] to get a general information.
+
+    ## Your help to improve project
+
+    We would be truly grateful for any help with:
+
+    - Creating tests and benchmarks for code;
+    - Improving existing functions, structs, or tests;
+    - Feature requests with interesting functions that would be good to add;
+    - Say a few words about the project on your social networks and blogs (Dev.to, Medium, Хабр, and so on).
+
+    Your PRs & issues are welcome! Thanks 😉
+
+    <!-- Links -->
+
+    [brew_url]: https://brew.sh
+    [docker_url]: https://www.docker.com
+    [project_url]: https://github.com/koddr/project
+  disable: false
+  skip_upload: false
+
+dockers:
+  -
+    id: '{{ .ProjectName }}_amd64'
+    ids: [ default ]
+    use: buildx
+    skip_push: auto
+    image_templates:
+      - 'koddr/{{ .ProjectName }}:latest-amd64'
+      - 'koddr/{{ .ProjectName }}:{{ .Tag }}-amd64'
+    build_flag_templates:
+      - '--pull'
+      - '--label=org.opencontainers.image.created={{ .Date }}'
+      - '--label=org.opencontainers.image.title={{ .ProjectName }}'
+      - '--label=org.opencontainers.image.revision={{ .FullCommit }}'
+      - '--label=org.opencontainers.image.version={{ .Version }}'
+      - '--platform=linux/amd64'
+    push_flags:
+      - '--tls-verify=false'
+  -
+    id: '{{ .ProjectName }}_arm64'
+    ids: [ default ]
+    use: buildx
+    skip_push: auto
+    image_templates:
+      - 'koddr/{{ .ProjectName }}:latest-arm64'
+      - 'koddr/{{ .ProjectName }}:{{ .Tag }}-arm64'
+    build_flag_templates:
+      - '--pull'
+      - '--label=org.opencontainers.image.created={{ .Date }}'
+      - '--label=org.opencontainers.image.title={{ .ProjectName }}'
+      - '--label=org.opencontainers.image.revision={{ .FullCommit }}'
+      - '--label=org.opencontainers.image.version={{ .Version }}'
+      - '--platform=linux/arm64'
+    push_flags:
+      - '--tls-verify=false'
+
+docker_manifests:
+  -
+    name_template: 'koddr/{{ .ProjectName }}:latest'
+    skip_push: auto
+    image_templates:
+      - 'koddr/{{ .ProjectName }}:latest-amd64'
+      - 'koddr/{{ .ProjectName }}:latest-arm64'
+  -
+    name_template: 'koddr/{{ .ProjectName }}:{{ .Tag }}'
+    skip_push: auto
+    image_templates:
+      - 'koddr/{{ .ProjectName }}:{{ .Tag }}-amd64'
+      - 'koddr/{{ .ProjectName }}:{{ .Tag }}-arm64'
+
+brews:
+  -
+    repository:
+      owner: koddr
+      name: homebrew-tap
+      branch: main
+      token: '{{ .Env.GITHUB_TOKEN }}'
+      pull_request:
+        enabled: true
+      git:
+        url: 'git@github.com:koddr/homebrew-tap.git'
+        private_key: '{{ .Env.BREW_PRIVATE_KEY_PATH }}'
+    commit_author:
+      name: Vic Shóstak
+      email: koddr.me@gmail.com
+    commit_msg_template: 'Brew formula update for {{ .ProjectName }} version {{ .Tag }}'
+    folder: Formula
+    caveats: |
+      After install:
+
+      1. Create a new '.project.yml' config file:
+
+        $ project init
+
+      2. Edit a config file with your settings and options.
+      3. Run a generation process to build Docker files to deploy your project:
+
+        $ project build
+
+      4. Deploy your project by the generated 'docker-compose.yml' file to the remote server (for ex., with the Portainer platform).
+
+      💡 Note: See the Complete user guide (https://github.com/koddr/project) to get a general information.
+    homepage: 'https://github.com/koddr/{{ .ProjectName }}'
+    description: |
+      Description of my project.
+    license: Apache 2.0
+    skip_upload: false
+
+nfpms:
+  -
+    maintainer: Vic Shóstak <koddr.me@gmail.com>
+    description: |
+      Description of my project.
+    homepage: 'https://github.com/koddr/{{ .ProjectName }}'
+    license: Apache 2.0
+    formats: [ deb, rpm, apk, archlinux ]
+
+archives:
+  -
+    format_overrides:
+      - goos: windows
+        format: zip
+    files: [ LICENSE, README.md ]
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  abbrev: -1
+  filters:
+    exclude: [ '^*.md', '^*.ya?ml' ]
+  groups:
+    - title: New features
+      regexp: ^.*?((A|a)dd)|((F|f)eature).*?$
+      order: 0
+    - title: Bug fixes
+      regexp: ^.*?((B|b)ug)|((F|f)ix).*?$
+      order: 1
+    - title: Improvements
+      regexp: ^.*?(I|i)mprove.*?$
+      order: 2
+    - title: Updates
+      regexp: ^.*?(U|u)pdate.*?$
+      order: 3
+    - title: Security issues
+      regexp: ^.*?(S|s)ecurity.*?$
+      order: 4
+    - title: Delete unused or stale
+      regexp: ^.*?((D|d)elete)|((U|u)nused)|((S|s)tale).*?$
+      order: 5
+    - title: Others
+      order: 999
