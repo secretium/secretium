@@ -59,116 +59,25 @@ Also, the ready-made `exe` files for Windows, `deb`, `rpm`, `apk` or Arch Linux 
 
 ## 📖 Complete user guide
 
-To get a complete guide to use and understand the basic principles of the **Secretium** project, we have prepared a comprehensive explanation of each command at once in this README file.
+We always treasure your time and want you to start building really great web products on this awesome technology stack as soon as possible! Therefore, to get a complete guide to use and understand the basic principles of the **Secretium** project, we have prepared a comprehensive explanation of the project in this 📖 [**Complete user guide**][docs_url].
 
-> [!NOTE]
-> We always treasure your time and want you to start using the really great products as soon as possible!
+<a href="https://secretium.org" target="_blank" title="Go to the Secretium's Complete user guide"><img width="360px" alt="secretium docs banner" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-docs-banner.svg"></a>
 
-We hope you find answers to all of your questions! 👌 But, if you do not find needed information, feel free to create an [issue][repo_issues_url] or send a [PR][repo_pull_request_url] to this repository.
+We have taken care to make it **as comfortable as possible** for you to learn this wonderful tool, so each CLI command has a sufficient textual description, as well as a visual diagram of how it works.
 
-### Install on the remote server
+### The learning path
 
-Here's a complete version of the steps to run the **Secretium** on your remote server:
+It is highly recommended to start exploring with short introductory articles "[**What is Secretium?**][docs_getting_started_url]" and "[**How does it work?**][docs_how_it_works_url]" to understand the basic principle and the main components built into the **Secretium** project.
 
-- Login to your remote server.
-- Install [Docker][docker_install_url] with the [Compose][docker_compose_install_url] plugin.
-- Run the official [`install.sh`][repo_install_sh_url] script from the **Secretium** repository:
+Next steps are:
 
-```bash
-wget -O - https://raw.githubusercontent.com/secretium/secretium/install.sh | bash
-```
+1. [Install the CLI to your system][docs_installation_url]
+2. [Configure your project][docs_configuring_url]
+3. [Start creating a new project][docs_create_new_project_url]
+4. [Running your project locally][docs_run_project_url]
+5. [Build your project for the production][docs_build_project_url]
 
-- The installation script will create a folder for the database (`./secretium-data`) and the default `docker-compose.yml` file with the following configuration:
-
-```yaml
-version: '3.8'
-
-# Define services.
-services:
-  # Service for the backend.
-  secretium:
-    # Configuration for the Docker image for the service.
-    image: 'secretium/secretium:latest'
-    # Set restart rules for the container.
-    restart: unless-stopped
-    # Forward the exposed port 8787 on the container to port 8787 on the host machine.
-    ports:
-      - '8787:8787'
-    # Set required environment variables for the backend.
-    environment:
-      SECRET_KEY: /run/secrets/secretium_key
-      MASTER_USERNAME: /run/secrets/secretium_master_username
-      MASTER_PASSWORD: /run/secrets/secretium_master_password
-      DOMAIN: /run/secrets/secretium_domain
-      DOMAIN_SCHEMA: https
-      SERVER_PORT: 8787 # same as the exposed container port
-      SERVER_TIMEZONE: Europe/Moscow
-      SERVER_READ_TIMEOUT: 5
-      SERVER_WRITE_TIMEOUT: 10
-    # Set volumes for the container with SQLite data and the root SSL certificates.
-    volumes:
-      - ./secretium-data:/secretium-data
-      - /etc/ssl/certs:/etc/ssl/certs:ro
-
-# Define the secrets.
-secrets:
-  # Key for the Secretium.
-  secretium_key:
-    # Path to the file with your secret key.
-    file: secretium_key.txt
-  # Master username used for the Secretium dashboard.
-  secretium_master_username:
-    # Path to the file with your master username.
-    file: secretium_master_username.txt
-  # Master password used for the Secretium dashboard.
-  secretium_master_password:
-    # Path to the file with your master password.
-    file: secretium_master_password.txt
-  # Domain name for the Secretium's links.
-  secretium_domain:
-    # Path to the file with your domain name.
-    file: secretium_domain.txt
-```
-
-- Edit the `docker-compose.yml` file with your parameters (see the [Configuration](#configuration) section).
-- For the security reasons, create the TXT files for the sensitive data to use them with the [Docker Secrets][docker_secrets_url]:
-  - `secretium_key.txt` for the secret key to encrypt data;
-  - `secretium_master_username.txt` for the master username to login to the dashboard as admin;
-  - `secretium_master_password.txt` for the master password to login to the dashboard as admin;
-  - `secretium_domain.txt` for the domain name to share links.
-- Open the TXT files and paste your sensitive data:
-
-```bash
-echo "this-is-my-secret-key-123" > secretium_key.txt
-echo "this-is-my-master-username" > secretium_master_username.txt
-echo "this-is-my-master-password-123" > secretium_master_password.txt
-echo "example.com" > secretium_domain.txt
-```
-
-- Run `docker-compose up -d` command to start the **Secretium** container.
-
-> [!WARNING]
-> Don't forget to **remove** the TXT files with the sensitive data after running container from your server:
->
-> ```bash
-> rm secretium_key.txt secretium_master_username.txt secretium_master_password.txt secretium_domain.txt
-> ```
-
-#### Configuration
-
-A complete list of parameters for the `docker-compose.yml` file:
-
-| Environment variable   | Description                                                           | Default value     |
-| ---------------------- | --------------------------------------------------------------------- | ----------------- |
-| `SECRET_KEY`           | Set your secret key to the encrypt data on the backend                | `""`              |
-| `MASTER_USERNAME`      | Set your master username to login to the backend's dashboard as admin | `""`              |
-| `MASTER_PASSWORD`      | Set your master password to login to the backend's dashboard as admin | `""`              |
-| `DOMAIN`               | Set your domain name for sharing links to the secrets                 | `""`              |
-| `DOMAIN_SCHEMA`        | Set the HTTP scheme for your domain name                              | `"https"`         |
-| `SERVER_PORT`          | Set the server port for the backend                                   | `8787`            |
-| `SERVER_TIMEZONE`      | Set the [Timezone][timezone_url] to the backend                       | `"Europe/Moscow"` |
-| `SERVER_READ_TIMEOUT`  | Set the server read timeout to the backend                            | `5`               |
-| `SERVER_WRITE_TIMEOUT` | Set the server write timeout to the backend                           | `10`              |
+Hope you find answers to all of your questions! 😉
 
 ## 🎯 Motivation to create
 

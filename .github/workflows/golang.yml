@@ -2,16 +2,16 @@ name: Golang workflow
 
 on:
   push:
-    paths: [ '**.go' ]
+    paths: ["**.go"]
   pull_request:
-    paths: [ '**.go' ]
+    paths: ["**.go"]
 
 jobs:
   build:
     strategy:
       matrix:
-        go: [ 'stable' ]
-        os: [ 'ubuntu-latest' ]
+        go: ["stable"]
+        os: ["ubuntu-latest"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -36,6 +36,12 @@ jobs:
 
       - name: Run "go-critic/go-critic" for code linting
         run: go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
+
+      - name: Run "go.uber.org/nilaway" for preventing nil pointer dereferences
+        run: go run go.uber.org/nilaway/cmd/nilaway@latest ./...
+
+      - name: Run "kisielk/errcheck" for checking code for unhandled errors
+        run: go run github.com/kisielk/errcheck@latest ./...
 
       - name: Run "gordonklaus/ineffassign" for code checks
         run: go run github.com/gordonklaus/ineffassign@latest ./...

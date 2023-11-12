@@ -7,6 +7,11 @@ import (
 
 // WrapHTTPError wraps HTTP errors.
 func WrapHTTPError(w http.ResponseWriter, r *http.Request, status int, err string) {
+	// Check, if the request has a query string.
+	if r.URL.Query() == nil {
+		return
+	}
+
 	// Log error.
 	slog.Error(
 		err,

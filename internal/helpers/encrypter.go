@@ -15,7 +15,7 @@ import (
 func EncryptString(secretKey, text string) (string, error) {
 	// Create a new AES cipher using the key.
 	block, err := aes.NewCipher([]byte(fmt.Sprintf("%-16s", secretKey)))
-	if err != nil {
+	if block == nil || err != nil {
 		return "", err
 	}
 
