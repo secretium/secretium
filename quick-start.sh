@@ -17,9 +17,9 @@ services:
     image: 'truewebartisans/secretium:latest'
     # Set restart rules for the container.
     restart: unless-stopped
-    # Forward the exposed port 8787 on the container to port 8787 on the host machine.
-    ports:
-      - '8787:8787'
+    # Forward the exposed port 8787 on the container to the host machine.
+    expose:
+      - '8787'
     # Set required environment variables for the backend.
     environment:
       SECRET_KEY: /run/secrets/secretium_key
