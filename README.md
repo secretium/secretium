@@ -44,16 +44,19 @@ Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **S
 wget -O - https://secretium.org/scripts/quick-start | bash
 ```
 
-> [!NOTE]
+> [!WARNING]
 > This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container on port `8787`, and remove the TXT files with the sensitive data after running container.
 
-Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and password.
+Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and master password, which are defined in the previous steps.
 
 That's it! 🔥 Your smart self-hosted **Secretium** is ready to use!
 
 ### 📦 Other ways to quick start
 
-Feel free to using the **Secretium** project from the [official Docker image][docker_image_url] and run it manually in the isolated container in your pipelines. This Docker image is available for GNU/Linux only (`amd64` and `arm64`).
+Feel free to using the **Secretium** project from the [official Docker image][docker_image_url] and run it manually in the isolated container in your pipelines.
+
+> [!WARNING]
+> This Docker image is available for GNU/Linux only (`amd64` and `arm64`, including [WSL][wsl_url]).
 
 Also, the ready-made `exe` files for Windows, `deb`, `rpm`, `apk` or Arch Linux packages can be downloaded from the [Releases][repo_releases_url] page of this repository.
 
@@ -114,7 +117,6 @@ Your PRs, issues & any words are welcome! Thank you 😘
 <!-- Repository links -->
 
 [repo_url]: https://github.com/secretium/secretium
-[repo_complete_user_guide_url]: https://github.com/secretium/secretium#-complete-user-guide
 [repo_quick_start_sh_url]: https://github.com/secretium/secretium/blob/main/quick-start.sh
 [repo_install_sh_url]: https://github.com/secretium/secretium/main/install.sh
 [repo_issues_url]: https://github.com/secretium/secretium/issues
@@ -123,6 +125,11 @@ Your PRs, issues & any words are welcome! Thank you 😘
 [repo_license_url]: https://github.com/secretium/secretium/blob/main/LICENSE
 [repo_license_img]: https://img.shields.io/badge/license-Apache_2.0-red?style=for-the-badge&logo=none
 [repo_cc_license_url]: https://creativecommons.org/licenses/by-sa/4.0/
+
+<!-- Docs links -->
+
+[docs_getting_started_url]: https://secretium.org/getting-started
+[docs_how_it_works_url]: https://secretium.org/how-it-works
 
 <!-- Docker links -->
 
@@ -138,9 +145,7 @@ Your PRs, issues & any words are welcome! Thank you 😘
 
 <!-- Readme links -->
 
-[timezone_url]: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 [cgapp_url]: https://github.com/create-go-app/cli
 [gowebly_url]: https://github.com/gowebly/gowebly
 [nginx_proxy_manager_url]: https://nginxproxymanager.org
 [traefik_proxy_url]: https://traefik.io
-[lets_encrypt_url]: https://letsencrypt.org
