@@ -8,9 +8,10 @@ import (
 	"github.com/secretium/secretium/internal/attachments"
 	"github.com/secretium/secretium/internal/config"
 	"github.com/secretium/secretium/internal/database"
+	"github.com/secretium/secretium/internal/session"
 )
 
 // initializeApplication provides dependency injection process by the "google/wire" package.
 func initializeApplication() (*application.Application, error) {
-	panic(wire.Build(attachments.New, config.New, database.New, application.New))
+	panic(wire.Build(attachments.New, config.New, database.New, session.New, application.New))
 }

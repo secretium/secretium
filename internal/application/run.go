@@ -24,7 +24,7 @@ func (a *Application) Run() error {
 		Addr:         fmt.Sprintf(":%d", a.Config.Server.Port),
 		ReadTimeout:  time.Duration(a.Config.Server.ReadTimeout) * time.Second,
 		WriteTimeout: time.Duration(a.Config.Server.WriteTimeout) * time.Second,
-		Handler:      a.router(), // use the HttpRouter instance
+		Handler:      a.Session.Manager.LoadAndSave(a.router()), // use the HttpRouter instance with session manager
 	}
 
 	// Get the URL of the server.

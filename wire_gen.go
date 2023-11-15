@@ -11,6 +11,7 @@ import (
 	"github.com/secretium/secretium/internal/attachments"
 	"github.com/secretium/secretium/internal/config"
 	"github.com/secretium/secretium/internal/database"
+	"github.com/secretium/secretium/internal/session"
 )
 
 // Injectors from wire.go:
@@ -26,6 +27,7 @@ func initializeApplication() (*application.Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	applicationApplication := application.New(attachmentsAttachments, configConfig, databaseDatabase)
+	sessionSession := session.New(configConfig)
+	applicationApplication := application.New(attachmentsAttachments, configConfig, databaseDatabase, sessionSession)
 	return applicationApplication, nil
 }

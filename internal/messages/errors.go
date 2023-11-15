@@ -82,20 +82,11 @@ const (
 	ErrFormLoginUserCredentialsNotValid string = "username or master password are empty or not valid"
 
 	/*
-		JWT error messages.
+		Session error messages.
 	*/
 
-	// ErrJWTNotValid is returned when the JWT is not valid.
-	ErrJWTNotValid string = "couldn't parse JWT (not valid or expired)"
-
-	// ErrJWTHeaderNotValid is returned when the JWT header is not valid.
-	ErrJWTHeaderNotValid string = "couldn't parse JWT header (empty or not valid)"
-
-	// ErrJWTClaimsNotValid is returned when the JWT claims are not valid.
-	ErrJWTClaimsNotValid string = "couldn't parse JWT claims (not valid)"
-
-	// ErrJWTExpired is returned when the JWT is expired.
-	ErrJWTExpired string = "current JWT is expired"
+	// ErrSessionUserNotAuthenticated is returned when the user is not authenticated.
+	ErrSessionUserNotAuthenticated string = "user is not authenticated"
 )
 
 // ErrorField represents an error field.

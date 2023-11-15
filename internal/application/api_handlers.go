@@ -31,21 +31,6 @@ func (a *Application) APIAddSecretHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Parse the form data.
 	if err := r.ParseForm(); err != nil {
 		// Send a 400 bad request response.
@@ -310,21 +295,6 @@ func (a *Application) APIRenewSecretExpiresAtFieldByKeyHandler(w http.ResponseWr
 		return
 	}
 
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -358,21 +328,6 @@ func (a *Application) APIRestoreSecretAccessCodeFieldByKeyHandler(w http.Respons
 			},
 		).Render(r.Context(), w)
 
-		return
-	}
-
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
 		return
 	}
 
@@ -465,21 +420,6 @@ func (a *Application) APIDeleteSecretByKeyHandler(w http.ResponseWriter, r *http
 		return
 	}
 
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -516,21 +456,6 @@ func (a *Application) APIDashboardActiveSecretsHandler(w http.ResponseWriter, r 
 		return
 	}
 
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Get all active secrets.
 	secrets, err := a.Database.QueryGetActiveSecrets()
 	if err != nil {
@@ -556,21 +481,6 @@ func (a *Application) APIDashboardExpiredSecretsHandler(w http.ResponseWriter, r
 			},
 		).Render(r.Context(), w)
 
-		return
-	}
-
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
 		return
 	}
 
@@ -647,24 +557,11 @@ func (a *Application) APIUserLoginHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// Generate JWT.
-	jwt, err := helpers.GenerateJWT(a.Config.SecretKey)
-	if err != nil {
-		// Send a 401 unauthorized response.
-		w.WriteHeader(http.StatusUnauthorized)
+	// Set session.
+	a.Session.Manager.Put(r.Context(), "authenticated", true)
 
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "JWT", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-	// Save JWT to local storage (on the client) and redirect to the dashboard page.
-	w.Header().Set("HX-Trigger", fmt.Sprintf(`{"jwtSaveToLocalStorage": %q}`, jwt))
-	w.Header().Set("HX-Location", "/dashboard")
+	// Redirect to the dashboard page.
+	w.Header().Set("HX-Redirect", "/dashboard")
 }
 
 // APIUserLogoutHandler logs out the user (GET).
@@ -684,7 +581,9 @@ func (a *Application) APIUserLogoutHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// Remove JWT from local storage (on the client) and redirect to the index page.
-	w.Header().Set("HX-Trigger", `{"jwtRemoveFromLocalStorage": ""}`)
+	// Remove session.
+	a.Session.Manager.Remove(r.Context(), "authenticated")
+
+	// Redirect to the index page.
 	w.Header().Set("HX-Redirect", "/")
 }

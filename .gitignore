@@ -32,18 +32,24 @@ bin/
 node_modules/
 bun.lockb
 
-# Stylesheets
-internal/attachments/static_files/*.min.css
+# Minified styles
+internal/attachments/static_files/*.css
+internal/attachments/static_files/*.css.map
+
+# Minified scripts
+internal/attachments/static_files/*.js
+internal/attachments/static_files/*.js.map
 
 # GoReleaser directories
 dist/
 
 # Temp directories
 .cache/
+.parcel-cache/
 tmp/
 
 # SQLite database folder
-secret-sharer-data/
+secretium-data/
 
 # REST Client files
 *.http

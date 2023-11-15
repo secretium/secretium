@@ -1,17 +1,29 @@
 {
   "name": "secretium",
   "version": "1.0.0",
-  "description": "Frontend part with Tailwind CSS of the Secretium project.",
+  "description": "Frontend part of the Secretium project.",
   "license": "Apache-2.0",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "source": [
+    "./assets/styles.css",
+    "./assets/scripts.js"
+  ],
+  "targets": {
+    "default": {
+      "distDir": "./internal/attachments/static_files"
+    }
+  },
   "scripts": {
-    "minify:js": "bunx terser ./assets/scripts.js -o ./internal/attachments/static_files/js/scripts.min.js -c -m",
-    "minify:css": "bunx tailwindcss -i ./assets/styles.css -o ./internal/attachments/static_files/css/styles.min.css --minify",
-    "watch": "bunx tailwindcss -i ./assets/styles.css -o ./internal/attachments/static_files/css/styles.min.css --watch",
-    "build": "minify:js && minify:css"
+    "watch": "bunx parcel watch",
+    "build": "bunx parcel build"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "latest",
-    "@tailwindcss/typography": "latest",
-    "tailwindcss": "latest"
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "htmx.org": "^1.9.8",
+    "hyperscript.org": "^0.9.12",
+    "parcel": "^2.10.3",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
   }
 }

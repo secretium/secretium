@@ -8,13 +8,19 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/secretium/secretium/internal/helpers"
-	"github.com/secretium/secretium/internal/messages"
 	"github.com/secretium/secretium/internal/templates"
 	"github.com/secretium/secretium/internal/templates/pages"
 )
 
 // PageIndexHandler renders the index page (GET).
 func (a *Application) PageIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	// Check, if the user is authenticated.
+	if a.Session.Manager.GetBool(r.Context(), "authenticated") {
+		// Redirect to the dashboard page.
+		http.Redirect(w, r, "/dashboard", http.StatusFound)
+		return
+	}
+
 	// Create template options.
 	templateOptions := &templates.TemplateOptions{
 		PageTitle: "Login to your account",
@@ -94,21 +100,6 @@ func (a *Application) PageSecretHandler(w http.ResponseWriter, r *http.Request, 
 
 // PageDashboardIndexHandler renders the dashboard index page (GET).
 func (a *Application) PageDashboardIndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Create template options.
 	templateOptions := &templates.TemplateOptions{
 		PageTitle: "Dashboard",
@@ -134,21 +125,6 @@ func (a *Application) PageDashboardIndexHandler(w http.ResponseWriter, r *http.R
 
 // PageDashboardAddSecretHandler renders the add secret page (GET).
 func (a *Application) PageDashboardAddSecretHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Create template options.
 	templateOptions := &templates.TemplateOptions{
 		PageTitle: "Add secret",
@@ -174,21 +150,6 @@ func (a *Application) PageDashboardAddSecretHandler(w http.ResponseWriter, r *ht
 
 // PageDashboardShareSecretHandler renders the share secret page (GET).
 func (a *Application) PageDashboardShareSecretHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Extract the token expires datetime from the JWT.
-	token, err := helpers.ExtractJWT(r.Header.Get("Authorization"), a.Config.SecretKey)
-	if err != nil {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTClaimsNotValid)
-		return
-	}
-
-	// Check, if the token is expired.
-	if token.ExpiresAt < time.Now().Unix() {
-		// Send a 403 forbidden response.
-		helpers.WrapHTTPError(w, r, http.StatusForbidden, messages.ErrJWTExpired)
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 

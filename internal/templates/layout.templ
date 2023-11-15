@@ -6,7 +6,7 @@ import (
 )
 
 // contentSecurityPolicy is the Content-Security-Policy header for htmx and Tailwind CSS.
-var contentSecurityPolicy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://unpkg.com 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://cdn.tailwindcss.com;"
+var contentSecurityPolicy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: http://cdn.tailwindcss.com; connect-src 'self' ws://localhost:*;"
 
 // headerLogoSize is the size of the header logo in pixels.
 var headerLogoSize = "148px"
@@ -34,7 +34,7 @@ templ Layout(options *TemplateOptions) {
 			<link rel="preconnect" href="https://fonts.googleapis.com"/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 			<link href="https://fonts.googleapis.com/css2?family=Inter&amp;family=Fira+Code&amp;display=swap" rel="stylesheet"/>
-			<link rel="stylesheet" href="/css/styles.min.css"/>
+			<link rel="stylesheet" href="/styles.css"/>
 		</head>
 		<body>
 			<article>
@@ -64,19 +64,19 @@ templ Layout(options *TemplateOptions) {
 				<footer class={ options.Footer.CSSClass }>
 					<div class="copyright-text">
 						<p>
-							&copy;&nbsp;{ footerCurrentYear } <a href="https://shrr.org" target="_blank">Secret Sharer</a>. A smart
+							&copy;&nbsp;{ footerCurrentYear } <a href="https://secretium.org" target="_blank">Secret Sharer</a>. A smart
 							self-hosted tool for sharing secrets with your friends. 100% free and Open Source under the Apache 2.0 license.
 							Developed with love by <a href="https://github.com/koddr" target="_blank">Vic Shóstak</a> and the
 							<a href="https://github.com/truewebartisans" target="_blank">True Web Artisans</a> team.
 						</p>
 						<a
- 							href="https://shrr.org/get-pro"
+ 							href="https://secretium.org/pricing"
  							target="_blank"
  							class="promotion-banner"
  							title="Get the Secret Sharer PRO now!"
 						>
 							&#128293;&nbsp;Want to achieve more features?
-							Get the <strong>Secret Sharer PRO</strong> now!
+							Switch to the <strong>Secretium Cloud</strong> now!
 						</a>
 					</div>
 					<div class="copyright-links">
@@ -106,7 +106,7 @@ templ Layout(options *TemplateOptions) {
 								</svg>
 							</a>
 							<a
- 								href="https://www.producthunt.com/products/secret-sharer"
+ 								href="https://www.producthunt.com/products/secretium"
  								target="_blank"
  								title="Send review on the Product Hunt"
 							>
@@ -133,9 +133,7 @@ templ Layout(options *TemplateOptions) {
 					</div>
 				</footer>
 			</article>
-			<script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
-			<script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
-			<script src="/js/scripts.min.js"></script>
+			<script src="/scripts.js"></script>
 		</body>
 	</html>
 }

@@ -67,13 +67,16 @@ func New() (*Config, error) {
 		)
 	}
 
-	// Validate domain URL.
-	if err := helpers.IsValidURL(os.Getenv("DOMAIN")); err != nil {
-		return nil, err
+	// Check, if the domain URL is present.
+	if os.Getenv("DOMAIN") != "" {
+		// Validate domain URL.
+		if err := helpers.IsValidURL(os.Getenv("DOMAIN")); err != nil {
+			return nil, err
+		}
 	}
 
 	// Check, if the domain HTTP schema is present.
-	if len(os.Getenv("DOMAIN_SCHEMA")) > 0 {
+	if os.Getenv("DOMAIN_SCHEMA") != "" {
 		// Validate domain HTTP schema.
 		if !slices.Contains([]string{"https", "http"}, os.Getenv("DOMAIN_SCHEMA")) {
 			return nil, errors.New(messages.ErrConfigDomainSchemaNotValid)
@@ -107,7 +110,7 @@ func New() (*Config, error) {
 		SecretKey:      os.Getenv("SECRET_KEY"),
 		MasterUsername: os.Getenv("MASTER_USERNAME"),
 		MasterPassword: os.Getenv("MASTER_PASSWORD"),
-		Domain:         os.Getenv("DOMAIN"),
+		Domain:         helpers.Getenv("DOMAIN", constants.ConstConfigDomain),
 		DomainSchema:   helpers.Getenv("DOMAIN_SCHEMA", constants.ConstConfigDomainSchema),
 		Server: &server{
 			Port:         port,

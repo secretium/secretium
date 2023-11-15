@@ -21,8 +21,11 @@ const (
 	// ConstConfigMasterPasswordMaxLength is the maximum length of the master password.
 	ConstConfigMasterPasswordMaxLength int = 16
 
+	// ConstConfigDomain is the domain URL.
+	ConstConfigDomain string = "localhost"
+
 	// ConstConfigDomainSchema is the domain HTTP schema.
-	ConstConfigDomainSchema string = "https"
+	ConstConfigDomainSchema string = "http"
 
 	// ConstConfigServerPort is the port the server is listening on.
 	ConstConfigServerPort string = "8787"
@@ -37,7 +40,7 @@ const (
 	ConstConfigServerTimezone string = "Europe/Moscow"
 
 	// ConstConfigSQLitePath is the path to the SQLite database.
-	ConstConfigSQLitePath string = "secret-sharer-data"
+	ConstConfigSQLitePath string = "secretium-data"
 
 	/*
 		Form constants.
