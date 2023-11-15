@@ -32,7 +32,12 @@ func (a *Application) MiddlewareUserAuthWithHTMXRequest(next httprouter.Handle) 
 	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		// Check, if the request has a 'HX-Request' header.
 		if r.Header.Get("HX-Request") == "" || r.Header.Get("HX-Request") != "true" {
-			w.WriteHeader(http.StatusBadRequest)
+			slog.Error(
+				messages.ErrHTMXHeaderNotValid,
+				"method", r.Method, "status", http.StatusBadRequest, "path", r.URL.Path,
+				"client_ip", r.RemoteAddr,
+			)
+			http.Redirect(w, r, "/", http.StatusFound)
 			return
 		}
 
@@ -57,7 +62,12 @@ func (a *Application) MiddlewareHTMXRequest(next httprouter.Handle) httprouter.H
 	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		// Check, if the request has a 'HX-Request' header.
 		if r.Header.Get("HX-Request") == "" || r.Header.Get("HX-Request") != "true" {
-			w.WriteHeader(http.StatusBadRequest)
+			slog.Error(
+				messages.ErrHTMXHeaderNotValid,
+				"method", r.Method, "status", http.StatusBadRequest, "path", r.URL.Path,
+				"client_ip", r.RemoteAddr,
+			)
+			http.Redirect(w, r, "/", http.StatusFound)
 			return
 		}
 
