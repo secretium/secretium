@@ -16,21 +16,6 @@ import (
 
 // APIAddSecretHandler adds a new secret to the database (POST).
 func (a *Application) APIAddSecretHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Parse the form data.
 	if err := r.ParseForm(); err != nil {
 		// Send a 400 bad request response.
@@ -140,21 +125,6 @@ func (a *Application) APIAddSecretHandler(w http.ResponseWriter, r *http.Request
 
 // APIUnlockSecretHandler renders the unlocked secret block (POST).
 func (a *Application) APIUnlockSecretHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -280,21 +250,6 @@ func (a *Application) APIUnlockSecretHandler(w http.ResponseWriter, r *http.Requ
 
 // APIRenewSecretExpiresAtFieldByKeyHandler renews a secret 'expires_at' field by its key from the database (PATCH).
 func (a *Application) APIRenewSecretExpiresAtFieldByKeyHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -316,21 +271,6 @@ func (a *Application) APIRenewSecretExpiresAtFieldByKeyHandler(w http.ResponseWr
 
 // APIRestoreSecretAccessCodeFieldByKeyHandler restores a secret 'access_code' field by its key from the database (PATCH).
 func (a *Application) APIRestoreSecretAccessCodeFieldByKeyHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -372,21 +312,6 @@ func (a *Application) APIRestoreSecretAccessCodeFieldByKeyHandler(w http.Respons
 
 // APIExpireSecretExpiresAtFieldByKeyHandler expires a secret 'expires_at' field by its key from the database (PATCH).
 func (a *Application) APIExpireSecretExpiresAtFieldByKeyHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -405,21 +330,6 @@ func (a *Application) APIExpireSecretExpiresAtFieldByKeyHandler(w http.ResponseW
 
 // APIDeleteSecretByKeyHandler deletes a secret by its key from the database (DELETE).
 func (a *Application) APIDeleteSecretByKeyHandler(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get key from the URL.
 	key := params.ByName("key")
 
@@ -441,21 +351,6 @@ func (a *Application) APIDeleteSecretByKeyHandler(w http.ResponseWriter, r *http
 
 // APIDashboardActiveSecretsHandler renders the active secrets block (GET).
 func (a *Application) APIDashboardActiveSecretsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get all active secrets.
 	secrets, err := a.Database.QueryGetActiveSecrets()
 	if err != nil {
@@ -469,21 +364,6 @@ func (a *Application) APIDashboardActiveSecretsHandler(w http.ResponseWriter, r 
 
 // APIDashboardExpiredSecretsHandler renders the expired secrets block.
 func (a *Application) APIDashboardExpiredSecretsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Get all expired secrets.
 	secrets, err := a.Database.QueryGetExpiredSecrets()
 	if err != nil {
@@ -497,21 +377,6 @@ func (a *Application) APIDashboardExpiredSecretsHandler(w http.ResponseWriter, r
 
 // APIUserLoginHandler logs in the user (POST).
 func (a *Application) APIUserLoginHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Parse the form data.
 	if err := r.ParseForm(); err != nil {
 		// Send a 400 bad request response.
@@ -566,21 +431,6 @@ func (a *Application) APIUserLoginHandler(w http.ResponseWriter, r *http.Request
 
 // APIUserLogoutHandler logs out the user (GET).
 func (a *Application) APIUserLogoutHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// Check, if the request has a 'HX-Request' header.
-	if !helpers.IsRequestValid(r) {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-			},
-		).Render(r.Context(), w)
-
-		return
-	}
-
 	// Remove session.
 	a.Session.Manager.Remove(r.Context(), "authenticated")
 
