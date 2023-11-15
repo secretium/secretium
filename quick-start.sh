@@ -25,7 +25,6 @@ services:
       SECRET_KEY: /run/secrets/secretium_key
       MASTER_USERNAME: /run/secrets/secretium_master_username
       MASTER_PASSWORD: /run/secrets/secretium_master_password
-      DOMAIN: /run/secrets/secretium_domain
     # Set volumes for the container with SQLite data and the root SSL certificates.
     volumes:
       - ./secretium-data:/secretium-data
@@ -45,10 +44,6 @@ secrets:
   secretium_master_password:
     # Path to the file with your master password.
     file: secretium_master_password.txt
-  # Domain name for the Secretium's links.
-  secretium_domain:
-    # Path to the file with your domain name.
-    file: secretium_domain.txt
 EOL
 
 # Run the 'docker-compose up -d' command to start the container.

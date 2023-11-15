@@ -10,7 +10,7 @@ A full description for the **Secretium** ...
 Features:
 
 - 100% **free** and **Open Source** under the [Apache 2.0][repo_license_url] license;
-- Powered by the **Go** programming language, **Templ** & **htmx** libraries and **Tailwind CSS** utility-first framework;
+- Powered by the **Go** programming language, **Templ** & **htmx** libraries and **Tailwind** utility-first CSS framework;
 - Works with **AES** encryption algorithm for secure your secrets before storing it in the database;
 - **Does not depend** on the host OS, it runs completely in an isolated Docker container;
 - Supported automatic switching between the **light/dark** UI themes;
@@ -20,36 +20,36 @@ Features:
 
 ## ⚡️ Quick start
 
-Here's a (*extremely*) minimal version of the steps to run the **Secretium** on your remote server:
+Here's minimal steps to run the **Secretium** on your local machine.
 
-- Login to your remote server.
-- Install [Docker][docker_install_url] with the [Compose][docker_compose_install_url] plugin.
-- For the security reasons, create the TXT files for the sensitive data to use them with the [Docker Secrets][docker_secrets_url]:
-  - `secretium_key.txt` for the secret key to encrypt data;
-  - `secretium_master_username.txt` for the master username to login to the dashboard as admin;
-  - `secretium_master_password.txt` for the master password to login to the dashboard as admin;
-  - `secretium_domain.txt` for the domain name to share links.
-- Open the TXT files and paste your sensitive data:
+First of all, install [Docker][docker_install_url] with the [Compose][docker_compose_install_url] plugin.
+
+For the security reasons, create the TXT files for the sensitive data to use them with the [Docker Secrets][docker_secrets_url]:
+
+- `secretium_key.txt` for the secret key to encrypt your data in the database;
+- `secretium_master_username.txt` for the master username to login to the dashboard as admin;
+- `secretium_master_password.txt` for the master password to login to the dashboard as admin.
+
+Open the TXT files and paste your sensitive data:
 
 ```bash
 echo "this-is-my-secret-key-123" > secretium_key.txt
 echo "this-is-my-master-username" > secretium_master_username.txt
 echo "this-is-my-master-password-123" > secretium_master_password.txt
-echo "example.com" > secretium_domain.txt
 ```
 
-- Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **Secretium** repository:
+Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **Secretium** website:
 
 ```bash
-wget -O - https://raw.githubusercontent.com/secretium/secretium/quick-start.sh | bash
+wget -O - https://secretium.org/scripts/quick-start | bash
 ```
 
-- This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container on port `8787`, and remove the TXT files with the sensitive data after running container.
-- Link the container to a web/proxy server (via [Nginx Proxy Manager][nginx_proxy_manager_url], for example).
-- Get [Let's Encrypt][lets_encrypt_url] SSL certificate for your domain and add it to the web/proxy server.
-- Open your browser, visit `https://example.com` and login to the admin dashboard with your master password.
+> [!NOTE]
+> This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container on port `8787`, and remove the TXT files with the sensitive data after running container.
 
-That's it! 🔥 Your smart self-hosted Secretium is ready to use!
+Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and password.
+
+That's it! 🔥 Your smart self-hosted **Secretium** is ready to use!
 
 ### 📦 Other ways to quick start
 
@@ -63,19 +63,11 @@ We always treasure your time and want you to start building really great web pro
 
 <a href="https://secretium.org" target="_blank" title="Go to the Secretium's Complete user guide"><img width="360px" alt="secretium docs banner" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-docs-banner.svg"></a>
 
-We have taken care to make it **as comfortable as possible** for you to learn this wonderful tool, so each CLI command has a sufficient textual description, as well as a visual diagram of how it works.
-
-### The learning path
-
 It is highly recommended to start exploring with short introductory articles "[**What is Secretium?**][docs_getting_started_url]" and "[**How does it work?**][docs_how_it_works_url]" to understand the basic principle and the main components built into the **Secretium** project.
 
 Next steps are:
 
 1. [Install the CLI to your system][docs_installation_url]
-2. [Configure your project][docs_configuring_url]
-3. [Start creating a new project][docs_create_new_project_url]
-4. [Running your project locally][docs_run_project_url]
-5. [Build your project for the production][docs_build_project_url]
 
 Hope you find answers to all of your questions! 😉
 
@@ -84,7 +76,7 @@ Hope you find answers to all of your questions! 😉
 ...
 
 > [!NOTE]
-> Earlier, we have already saved the world twice, it was [Create Go App][cgapp_url] and [gowebly][gowebly_url] (yep, that's our projects too). The GitHub stars statistics of these projects can't lie: more than **2.3k** developers of any level and different countries start a new project through these CLI tools.
+> Earlier, we have already saved the world twice, they were [Create Go App][cgapp_url] and [Gowebly][gowebly_url] (yep, that's our projects too). The GitHub stars statistics of these projects can't lie: more than **2.3k** developers of any level and different countries start a new project through these CLI tools.
 
 ## 🏆 A win-win cooperation
 
@@ -150,4 +142,5 @@ Your PRs, issues & any words are welcome! Thank you 😘
 [cgapp_url]: https://github.com/create-go-app/cli
 [gowebly_url]: https://github.com/gowebly/gowebly
 [nginx_proxy_manager_url]: https://nginxproxymanager.org
+[traefik_proxy_url]: https://traefik.io
 [lets_encrypt_url]: https://letsencrypt.org
