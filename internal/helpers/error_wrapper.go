@@ -18,7 +18,7 @@ func WrapHTTPError(w http.ResponseWriter, r *http.Request, status int, errTempla
 		// If you don't want to write HTTP headers, set the status to 0.
 	case http.StatusBadRequest, http.StatusUnauthorized, http.StatusForbidden:
 		w.Header().Set("HX-Retarget", "#errors")
-		errTemplate.Render(r.Context(), w)
+		_ = errTemplate.Render(r.Context(), w)
 	case http.StatusNotFound:
 		http.NotFound(w, r) // HTTP 404
 	default:

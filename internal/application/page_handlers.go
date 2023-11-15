@@ -181,7 +181,7 @@ func (a *Application) PageDashboardShareSecretHandler(w http.ResponseWriter, r *
 	}
 
 	// Check, if the URL has an 'access_code' parameter.
-	if r.URL.Query().Get("access_code") != "" {
+	if r.URL.Query() != nil && r.URL.Query().Get("access_code") != "" {
 		componentOptions.Data = map[string]string{
 			"AccessCode": r.URL.Query().Get("access_code"),
 		}
