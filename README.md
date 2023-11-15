@@ -44,7 +44,7 @@ Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **S
 wget -O - https://secretium.org/scripts/quick-start | bash
 ```
 
-> [!WARNING]
+> [!NOTE]
 > This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container on port `8787`, and remove the TXT files with the sensitive data after running container.
 
 Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and master password, which are defined in the previous steps.
@@ -152,3 +152,4 @@ Your PRs, issues & any words are welcome! Thank you 😘
 [gowebly_url]: https://github.com/gowebly/gowebly
 [nginx_proxy_manager_url]: https://nginxproxymanager.org
 [traefik_proxy_url]: https://traefik.io
+[wsl_url]: https://learn.microsoft.com/en-us/windows/wsl/
