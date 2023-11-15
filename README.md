@@ -93,6 +93,7 @@ And now, I invite you to participate in this project! Let's work **together** to
 
 - [Issues][repo_issues_url]: ask questions and submit your features.
 - [Pull requests][repo_pull_request_url]: send your improvements to the current.
+- [Discussions][repo_discussions_url]: discuss and share your ideas.
 - Say a few words about the project on your social networks and blogs (Dev.to, Medium, Хабр, and so on).
 
 Your PRs, issues & any words are welcome! Thank you 😘
@@ -121,6 +122,7 @@ Your PRs, issues & any words are welcome! Thank you 😘
 [repo_install_sh_url]: https://github.com/secretium/secretium/main/install.sh
 [repo_issues_url]: https://github.com/secretium/secretium/issues
 [repo_pull_request_url]: https://github.com/secretium/secretium/pulls
+[repo_discussions_url]: https://github.com/secretium/secretium/discussions
 [repo_releases_url]: https://github.com/secretium/secretium/releases
 [repo_license_url]: https://github.com/secretium/secretium/blob/main/LICENSE
 [repo_license_img]: https://img.shields.io/badge/license-Apache_2.0-red?style=for-the-badge&logo=none
@@ -128,6 +130,7 @@ Your PRs, issues & any words are welcome! Thank you 😘
 
 <!-- Docs links -->
 
+[docs_url]: https://secretium.org
 [docs_getting_started_url]: https://secretium.org/getting-started
 [docs_how_it_works_url]: https://secretium.org/how-it-works
 
