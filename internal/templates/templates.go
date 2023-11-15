@@ -23,4 +23,5 @@ type ElementStyle struct {
 type DashboardComponentOptions struct {
 	State, Username, ShareURL string
 	Secret                    *database.Secret
+	Data                      map[string]string
 }

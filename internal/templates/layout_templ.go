@@ -45,7 +45,7 @@ func Layout(options *TemplateOptions) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><meta name=\"keywords\" content=\"secret-sharer, sharing secret, share solution, self-hosted secret share\"><meta name=\"description\" content=\"A smart self-hosted tool for sharing secrets with your friends.\"><meta name=\"theme-color\" content=\"#FEFEF5\"><title>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"><meta name=\"keywords\" content=\"secretium, secret sharer, sharing secret, share solution, self-hosted secret share\"><meta name=\"description\" content=\"A smart self-hosted tool for sharing secrets with your friends.\"><meta name=\"theme-color\" content=\"#FEFEF5\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,7 +58,7 @@ func Layout(options *TemplateOptions) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var3 := `| Secret Sharer`
+		templ_7745c5c3_Var3 := `| Secretium`
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

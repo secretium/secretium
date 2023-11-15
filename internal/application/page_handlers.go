@@ -45,7 +45,7 @@ func (a *Application) PageSecretHandler(w http.ResponseWriter, r *http.Request, 
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -155,14 +155,14 @@ func (a *Application) PageDashboardShareSecretHandler(w http.ResponseWriter, r *
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Get secret by its key from the database.
 	secret, err := a.Database.QueryGetSecretByKey(key)
 	if err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
@@ -171,6 +171,20 @@ func (a *Application) PageDashboardShareSecretHandler(w http.ResponseWriter, r *
 		Scheme: a.Config.DomainSchema,
 		Host:   a.Config.Domain,
 		Path:   fmt.Sprintf("get/%s", key),
+	}
+
+	// Set component options.
+	componentOptions := &templates.DashboardComponentOptions{
+		State:    "share-secret",
+		ShareURL: shareURL.String(),
+		Secret:   &secret,
+	}
+
+	// Check, if the URL has an 'access_code' parameter.
+	if r.URL.Query().Get("access_code") != "" {
+		componentOptions.Data = map[string]string{
+			"AccessCode": r.URL.Query().Get("access_code"),
+		}
 	}
 
 	// Create template options.
@@ -185,13 +199,7 @@ func (a *Application) PageDashboardShareSecretHandler(w http.ResponseWriter, r *
 		Footer: &templates.ElementStyle{
 			CSSClass: "dashboard",
 		},
-		Component: pages.Dashboard(
-			&templates.DashboardComponentOptions{
-				State:    "share-secret",
-				ShareURL: shareURL.String(),
-				Secret:   &secret,
-			},
-		),
+		Component: pages.Dashboard(componentOptions),
 	}
 
 	// Render the dashboard share secret page.

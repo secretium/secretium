@@ -31,9 +31,9 @@ func (a *Application) router() *httprouter.Router {
 	*/
 
 	// Add a public set of HTML page handlers.
-	router.GET("/dashboard", a.MiddlewareUserAuth(a.PageDashboardIndexHandler))                  // handle the user dashboard page
-	router.GET("/dashboard/add", a.MiddlewareUserAuth(a.PageDashboardAddSecretHandler))          // handle the dashboard add secret page
-	router.GET("/dashboard/share/:key", a.MiddlewareUserAuth(a.PageDashboardShareSecretHandler)) // handle the dashboard share secret page
+	router.GET("/dashboard", a.MiddlewareUserAuth(a.PageDashboardIndexHandler))                                 // handle the user dashboard page
+	router.GET("/dashboard/add", a.MiddlewareUserAuthWithHTMXRequest(a.PageDashboardAddSecretHandler))          // handle the dashboard add secret page
+	router.GET("/dashboard/share/:key", a.MiddlewareUserAuthWithHTMXRequest(a.PageDashboardShareSecretHandler)) // handle the dashboard share secret page
 
 	// Add a set of API handlers.
 	router.POST("/api/secret/add", a.MiddlewareUserAuthWithHTMXRequest(a.APIAddSecretHandler))                                   // handle the add secret request to the API

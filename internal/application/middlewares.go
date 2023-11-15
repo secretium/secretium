@@ -6,7 +6,6 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/secretium/secretium/internal/messages"
-	"github.com/secretium/secretium/internal/templates/components"
 )
 
 // MiddlewareUserAuth checks, if the user is authenticated in the session cookie.
@@ -34,11 +33,6 @@ func (a *Application) MiddlewareUserAuthWithHTMXRequest(next httprouter.Handle) 
 		// Check, if the request has a 'HX-Request' header.
 		if r.Header.Get("HX-Request") == "" || r.Header.Get("HX-Request") != "true" {
 			w.WriteHeader(http.StatusBadRequest)
-			_ = components.FormValidationError(
-				[]*messages.ErrorField{
-					{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-				},
-			)
 			return
 		}
 
@@ -63,16 +57,7 @@ func (a *Application) MiddlewareHTMXRequest(next httprouter.Handle) httprouter.H
 	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		// Check, if the request has a 'HX-Request' header.
 		if r.Header.Get("HX-Request") == "" || r.Header.Get("HX-Request") != "true" {
-			// Send a 400 bad request response.
 			w.WriteHeader(http.StatusBadRequest)
-
-			// Render the form validation error.
-			_ = components.FormValidationError(
-				[]*messages.ErrorField{
-					{Name: "Request", Message: messages.ErrHTMXHeaderNotValid},
-				},
-			)
-
 			return
 		}
 

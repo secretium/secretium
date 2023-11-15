@@ -92,7 +92,6 @@
 
     /* Inputs */
 
-    input,
     input[type="text"],
     input[type="password"],
     textarea,
@@ -102,6 +101,12 @@
 
     input[type="checkbox"] {
         @apply p-3 text-base bg-white text-slate-600 border-blue-400 border-2 rounded-md focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 dark:bg-slate-800 dark:text-slate-400;
+    }
+
+    input[type="text"]:valid,
+    input[type="password"]:valid,
+    textarea:valid {
+        @apply border-green-400;
     }
 
     /* Textarea */

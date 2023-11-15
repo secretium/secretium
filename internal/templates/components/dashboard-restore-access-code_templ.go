@@ -54,7 +54,7 @@ func DashboardRestoreAccessCode(newAccessCode string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var5 := `Remember or write it down somewhere!`
+		templ_7745c5c3_Var5 := `Remember it!`
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

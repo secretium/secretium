@@ -1,5 +1,4 @@
-import htmx from "htmx.org";
-import 'hyperscript.org';
+import htmx from 'htmx.org';
 
 // Set HTMX to the window object.
 window.htmx = require('htmx.org');

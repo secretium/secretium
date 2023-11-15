@@ -69,6 +69,12 @@ const (
 		Form error messages.
 	*/
 
+	// ErrFormDataNotValid is returned when the form data is not valid.
+	ErrFormDataNotValid string = "form data is not valid"
+
+	// ErrFormSignInUserCredentialsNotValid is returned when the sign in user credentials are not valid.
+	ErrFormLoginUserCredentialsNotValid string = "master username or password are empty or not valid"
+
 	// ErrFormAddSecretNameLengthNotValid is returned when the secret name is not valid.
 	ErrFormAddSecretNameLengthNotValid string = "secret name is not valid (length should be greater than %d and less than %d)"
 
@@ -77,9 +83,6 @@ const (
 
 	// ErrFormAddSecretAccessCodeLengthNotValid is returned when the secret access code is not valid.
 	ErrFormAddSecretAccessCodeLengthNotValid string = "secret access code is not valid (length should be greater than %d and less than %d)"
-
-	// ErrFormSignInUserCredentialsNotValid is returned when the sign in user credentials are not valid.
-	ErrFormLoginUserCredentialsNotValid string = "username or master password are empty or not valid"
 
 	/*
 		Session error messages.

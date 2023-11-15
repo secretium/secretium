@@ -41,7 +41,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><form hx-post=\"/api/user/login\" hx-target-400=\"#errors\" hx-target-401=\"#errors\" hx-target-403=\"#errors\" hx-target-404=\"#errors\" hx-target-500=\"#errors\" hx-indicator=\"#loading-indicator\"><div><p><label for=\"username\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><form hx-post=\"/api/user/login\" hx-indicator=\"#loading-indicator\"><div><p><label for=\"username\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +50,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-red-500\" title=\"Required\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-red-500\" title=\"Required\" aria-label=\"required\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -59,7 +59,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></label></p><input id=\"username\" class=\"w-full\" inputmode=\"text\" minlength=\"3\" maxlength=\"16\" type=\"text\" name=\"username\" placeholder=\"Enter username\" autocomplete=\"off\" autofocus required><div class=\"help-text\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span></label></p><input id=\"username\" class=\"w-full\" inputmode=\"text\" minlength=\"4\" maxlength=\"16\" type=\"text\" name=\"username\" placeholder=\"Enter username\" autocomplete=\"off\" autofocus required><div class=\"help-text\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,7 +77,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-red-500\" title=\"Required\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"text-red-500\" title=\"Required\" aria-label=\"required\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

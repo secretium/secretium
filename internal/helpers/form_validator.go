@@ -13,7 +13,7 @@ type ErrorField struct {
 }
 
 // ValidateAddSecretForm returns nil if the given add secret form values are valid.
-func ValidateAddSecretForm(name, value, accessCode string) (errorFields []*messages.ErrorField) {
+func ValidateAddSecretForm(name, value string) (errorFields []*messages.ErrorField) {
 	// Check if the name is empty or not valid (length should be greater than 3 and less than 32).
 	if name == "" ||
 		len(name) < constants.ConstFormAddSecretNameMinLength ||
@@ -42,24 +42,6 @@ func ValidateAddSecretForm(name, value, accessCode string) (errorFields []*messa
 				Message: fmt.Sprintf(
 					messages.ErrFormAddSecretValueLengthNotValid,
 					constants.ConstFormAddSecretValueMinLength,
-				),
-			},
-		)
-	}
-
-	// Check if the access code is empty or not valid (length should be greater than 6 and less than 32).
-	if accessCode == "" ||
-		len(accessCode) < constants.ConstFormAddSecretAccessCodeMinLength ||
-		len(accessCode) > constants.ConstFormAddSecretAccessCodeMaxLength {
-		// Append error field.
-		errorFields = append(
-			errorFields,
-			&messages.ErrorField{
-				Name: "Access code",
-				Message: fmt.Sprintf(
-					messages.ErrFormAddSecretAccessCodeLengthNotValid,
-					constants.ConstFormAddSecretAccessCodeMinLength,
-					constants.ConstFormAddSecretAccessCodeMaxLength,
 				),
 			},
 		)

@@ -83,14 +83,13 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
 					<form
  						class="grid gap-2"
  						hx-post="/api/secret/add"
- 						hx-target-400="#errors"
- 						hx-target-500="#errors"
  						hx-indicator="#loading-indicator"
 					>
 						<div>
 							<p>
 								<label for="name">
-									Name of the secret <span class="text-red-500" title="Required">&#10033;</span>
+									Name of the secret
+									<span class="text-red-500" title="Required" aria-label="required">&#10033;</span>
 								</label>
 							</p>
 							<input
@@ -100,7 +99,7 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
  								minlength="3"
  								maxlength="32"
  								size="32"
- 								type="input"
+ 								type="text"
  								name="name"
  								placeholder="Enter secret name"
  								autocomplete="off"
@@ -114,7 +113,8 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
 						<div>
 							<p>
 								<label for="value">
-									Secret value <span class="text-red-500" title="Required">&#10033;</span>
+									Secret value
+									<span class="text-red-500" title="Required" aria-label="required">&#10033;</span>
 								</label>
 							</p>
 							<textarea
@@ -135,31 +135,9 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
 						</div>
 						<div>
 							<p>
-								<label for="access_code">
-									Access code to unlock the secret <span class="text-red-500" title="Required">&#10033;</span>
-								</label>
-							</p>
-							<input
- 								id="access_code"
- 								class="w-full sm:w-2/3"
- 								inputmode="text"
- 								minlength="6"
- 								maxlength="32"
- 								type="password"
- 								name="access_code"
- 								placeholder="Enter access code"
- 								autocomplete="off"
- 								required
-							/>
-							<div class="help-text">
-								Access code must be at least 6 characters and at most 32. It should be strong enough.
-							</div>
-						</div>
-						<div>
-							<p>
 								<label for="expires_at">
 									Select the expiration time (since now)
-									<span class="text-red-500" title="Required">&#10033;</span>
+									<span class="text-red-500" title="Required" aria-label="required">&#10033;</span>
 								</label>
 							</p>
 							<select
@@ -258,19 +236,27 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
 								<input id="share-url" type="text" value={ options.ShareURL } readonly/>
 							</div>
 							<div id="restore-access-code">
-								<p class="banner state-warning">
-									&#9888;&nbsp;Please note that your friends will only be able to unlock this secret by entering
-									the access code you defined when creating it! You can
-									<a
- 										hx-patch={ "/api/secret/restore/" + options.Secret.Key }
- 										hx-target="#restore-access-code"
- 										hx-confirm={ "Are you sure to restore the access code for '" + options.Secret.Name + "' (ID " + options.Secret.Key + ")? This action cannot be cancelled." }
- 										title="Restore access code"
-									>
-										restore the access code
-									</a>
-									right now. It will be overwritten with a random of 8 chars.
-								</p>
+								if options.Data["AccessCode"] != "" {
+									<p class="banner state-success">
+										&#10003;&nbsp;Your access code for the secret is
+										"<strong>{ options.Data["AccessCode"] }</strong>" (without quotes).
+										Remember it!
+									</p>
+								} else {
+									<p class="banner state-warning">
+										&#9888;&nbsp;Please note that your friends will only be able to unlock this secret by entering
+										the access code! You can
+										<a
+ 											hx-patch={ "/api/secret/restore/" + options.Secret.Key }
+ 											hx-target="#restore-access-code"
+ 											hx-confirm={ "Are you sure to restore the access code for '" + options.Secret.Name + "' (ID " + options.Secret.Key + ")? This action cannot be cancelled." }
+ 											title="Restore access code"
+										>
+											restore the access code
+										</a>
+										right now. It will be overwritten with a random of 8 chars.
+									</p>
+								}
 							</div>
 						</div>
 						<img class="justify-self-center" src={ "/qr/generate/" + options.Secret.Key } alt="QR code for sharing a secret"/>

@@ -18,78 +18,90 @@ import (
 func (a *Application) APIAddSecretHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// Parse the form data.
 	if err := r.ParseForm(); err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Form data", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Form data", Message: err.Error()},
+				},
+			),
+			messages.ErrFormDataNotValid,
+		)
 		return
 	}
 
 	// Get form values.
 	name := r.FormValue("name")
 	value := r.FormValue("value")
-	accessCode := r.FormValue("access_code")
 	expiresAt := r.FormValue("expires_at")
 	isExpireAfterFirstUnlock := r.FormValue("is_expire_after_first_unlock") == "on"
 
 	// Check, if the form values are valid.
-	if err := helpers.ValidateAddSecretForm(name, value, accessCode); err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(err).Render(r.Context(), w)
-
+	if err := helpers.ValidateAddSecretForm(name, value); err != nil {
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(err),
+			messages.ErrFormDataNotValid,
+		)
 		return
 	}
 
 	// Get current date and time.
 	createdAt := time.Now()
 
-	// Create a new hashed access code string with salt.
-	accessCodeHashed := helpers.HashString(
-		fmt.Sprintf("%d", createdAt.Unix()),
-		a.Config.SecretKey, accessCode,
-	)
+	// Create a new hashed access code string with salt and trim it to 8 characters.
+	accessCodeHashed := helpers.HashString(8, fmt.Sprintf("%d", createdAt.Unix()), a.Config.SecretKey)
 
-	// Shorten the access code to 16 characters.
-	key := helpers.ShortenString(accessCodeHashed, 16)
+	// Create a new hashed key string with salt and trim it to 16 characters.
+	keyHashed := helpers.HashString(16, accessCodeHashed, a.Config.SecretKey)
 
 	// Encrypt the secret value.
 	valueEncrypted, err := helpers.EncryptString(a.Config.SecretKey, value)
 	if err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Encrypt secret", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
+		return
+	}
 
-		// Render the encrypt secret error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Encrypt secret", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+	// Encrypt the access code value.
+	accessCodeEncrypted, err := helpers.EncryptString(a.Config.SecretKey, accessCodeHashed)
+	if err != nil {
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Encrypt access code", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
 		return
 	}
 
 	// Parse the 'expires_at' datetime.
 	expiresAtDuration, err := helpers.ExpiresDatetimeSwitcher(createdAt, expiresAt)
 	if err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the encrypt secret error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Expires datetime", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Expires datetime", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
 		return
 	}
 
@@ -98,29 +110,29 @@ func (a *Application) APIAddSecretHandler(w http.ResponseWriter, r *http.Request
 		CreatedAt:                createdAt,
 		ExpiresAt:                expiresAtDuration,
 		Name:                     name,
-		AccessCode:               accessCodeHashed,
-		Key:                      key,
+		AccessCode:               accessCodeEncrypted,
+		Key:                      keyHashed,
 		Value:                    valueEncrypted,
 		IsExpireAfterFirstUnlock: isExpireAfterFirstUnlock,
 	}
 
 	// Add the record to the database.
 	if err := a.Database.QueryAddSecret(secret); err != nil {
-		// Send a 500 bad request response.
-		w.WriteHeader(http.StatusInternalServerError)
-
-		// Render the encrypt secret error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Add secret", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Expires datetime", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
 		return
 	}
 
 	// Redirect to the share secret page.
-	w.Header().Set("HX-Location", fmt.Sprintf("/dashboard/share/%s", secret.Key))
+	w.Header().Set("HX-Location", fmt.Sprintf("/dashboard/share/%s?access_code=%s", secret.Key, accessCodeHashed))
 }
 
 // APIUnlockSecretHandler renders the unlocked secret block (POST).
@@ -204,40 +216,50 @@ func (a *Application) APIUnlockSecretHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	// Create a new hashed access code string with salt.
-	accessCodeHashed := helpers.HashString(
-		fmt.Sprintf("%d", secret.CreatedAt.Unix()),
-		a.Config.SecretKey, accessCode,
-	)
+	// Decrypt the access code value.
+	accessCodeDecrypted, err := helpers.DecryptString(a.Config.SecretKey, secret.AccessCode)
+	if err != nil {
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Decrypt access code", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
+		return
+	}
 
-	// Check, if the access code is correct.
-	if accessCodeHashed != secret.AccessCode {
-		// Send a 400 not found response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the secret page with 400 error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Access code", Message: messages.ErrSecretAccessCodeNotValid},
-			},
-		).Render(r.Context(), w)
-
+	// Check, if the entered access code is equal to the decrypted access code.
+	if accessCode != accessCodeDecrypted {
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Access code", Message: messages.ErrSecretAccessCodeNotValid},
+				},
+			),
+			messages.ErrSecretAccessCodeNotValid,
+		)
 		return
 	}
 
 	// Decrypt the secret value.
 	decryptedValue, err := helpers.DecryptString(a.Config.SecretKey, secret.Value)
 	if err != nil {
-		// Send a 400 not found response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the secret page with 400 error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Decrypt secret", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Decrypt secret", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
 		return
 	}
 
@@ -255,13 +277,13 @@ func (a *Application) APIRenewSecretExpiresAtFieldByKeyHandler(w http.ResponseWr
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Patch the record by its key from the database.
 	if err := a.Database.QueryUpdateExpiresAtFieldByKey(key, time.Now().Add(time.Hour*24).Local()); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -276,38 +298,44 @@ func (a *Application) APIRestoreSecretAccessCodeFieldByKeyHandler(w http.Respons
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Get the secret record by its key from the database.
 	secret, err := a.Database.QueryGetSecretByKey(key)
 	if err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusNotFound, err.Error())
-		return
-	}
-
-	// Set the access code to a new random value (size 8).
-	accessCode, err := helpers.GenerateAccessCode(8)
-	if err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 
 	// Create a new hashed access code string with salt.
-	accessCodeHashed := helpers.HashString(
-		fmt.Sprintf("%d", secret.CreatedAt.Unix()),
-		a.Config.SecretKey, accessCode,
-	)
+	accessCodeHashed := helpers.HashString(8, fmt.Sprintf("%d", secret.CreatedAt.Unix()), a.Config.SecretKey)
+
+	// Encrypt the access code value.
+	accessCodeEncrypted, err := helpers.EncryptString(a.Config.SecretKey, accessCodeHashed)
+	if err != nil {
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Encrypt access code", Message: err.Error()},
+				},
+			),
+			err.Error(),
+		)
+		return
+	}
 
 	// Patch the record by its key from the database.
-	if err := a.Database.QueryUpdateAccessCodeFieldByKey(key, accessCodeHashed); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+	if err := a.Database.QueryUpdateAccessCodeFieldByKey(key, accessCodeEncrypted); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	// Render the restore access code block.
-	_ = components.DashboardRestoreAccessCode(accessCode).Render(r.Context(), w)
+	_ = components.DashboardRestoreAccessCode(accessCodeHashed).Render(r.Context(), w)
 }
 
 // APIExpireSecretExpiresAtFieldByKeyHandler expires a secret 'expires_at' field by its key from the database (PATCH).
@@ -317,13 +345,13 @@ func (a *Application) APIExpireSecretExpiresAtFieldByKeyHandler(w http.ResponseW
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Patch the record by its key from the database.
 	if err := a.Database.QueryUpdateExpiresAtFieldByKey(key, time.Now().Add(time.Second*1).Local()); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 }
@@ -335,13 +363,13 @@ func (a *Application) APIDeleteSecretByKeyHandler(w http.ResponseWriter, r *http
 
 	// Check, if the current URL has a 'key' parameter with a valid secret key.
 	if err := helpers.IsSecretKeyValid(key, 16); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusBadRequest, err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Delete the record by its key from the database.
 	if err := a.Database.QueryDeleteSecretByKey(key); err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -354,7 +382,7 @@ func (a *Application) APIDashboardActiveSecretsHandler(w http.ResponseWriter, r 
 	// Get all active secrets.
 	secrets, err := a.Database.QueryGetActiveSecrets()
 	if err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -367,7 +395,7 @@ func (a *Application) APIDashboardExpiredSecretsHandler(w http.ResponseWriter, r
 	// Get all expired secrets.
 	secrets, err := a.Database.QueryGetExpiredSecrets()
 	if err != nil {
-		helpers.WrapHTTPError(w, r, http.StatusInternalServerError, err.Error())
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -379,16 +407,16 @@ func (a *Application) APIDashboardExpiredSecretsHandler(w http.ResponseWriter, r
 func (a *Application) APIUserLoginHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// Parse the form data.
 	if err := r.ParseForm(); err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Form data", Message: err.Error()},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Form data", Message: err.Error()},
+				},
+			),
+			messages.ErrFormDataNotValid,
+		)
 		return
 	}
 
@@ -398,27 +426,27 @@ func (a *Application) APIUserLoginHandler(w http.ResponseWriter, r *http.Request
 
 	// Check, if the form values are valid.
 	if err := helpers.ValidateUserSignInForm(username, masterPassword); err != nil {
-		// Send a 400 bad request response.
-		w.WriteHeader(http.StatusBadRequest)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(err).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusBadRequest,
+			components.FormValidationError(err),
+			messages.ErrFormLoginUserCredentialsNotValid,
+		)
 		return
 	}
 
 	// Authenticate the admin.
 	if a.Config.MasterUsername != username || a.Config.MasterPassword != masterPassword {
-		// Send a 401 unauthorized response.
-		w.WriteHeader(http.StatusUnauthorized)
-
-		// Render the form validation error.
-		_ = components.FormValidationError(
-			[]*messages.ErrorField{
-				{Name: "Form data", Message: messages.ErrFormLoginUserCredentialsNotValid},
-			},
-		).Render(r.Context(), w)
-
+		// Wrap the error with template.
+		helpers.WrapHTTPError(
+			w, r, http.StatusUnauthorized,
+			components.FormValidationError(
+				[]*messages.ErrorField{
+					{Name: "Form data", Message: messages.ErrFormLoginUserCredentialsNotValid},
+				},
+			),
+			messages.ErrSessionUserNotAuthenticated,
+		)
 		return
 	}
 
