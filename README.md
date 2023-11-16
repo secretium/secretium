@@ -7,9 +7,9 @@
 [![Code coverage][go_code_coverage_img]][go_code_coverage_url]
 [![License][repo_license_img]][repo_license_url]
 
-The **Secretium** project is a self-hosted tool for sharing secrets to your friends, colleagues, or anyone. The Open Source (or Community) edition of the project is a fully community-driven solution for personal use.
+The **Secretium** project is a self-hosted tool for sharing secrets to your friends, colleagues, or anyone. The Open Source (or Community) edition of the project is a fully **community-driven** solution for personal use.
 
-It is installed on your server as an **isolated** Docker container and only you own your secrets. To share your data, all you have to do is login to the **beautiful** administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
+It is installed on your server as an **isolated** Docker container and only you own your secrets. To share your data, all you have to do is login to the **beautiful** administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can **unlock** it and see the data.
 
 Features:
 
