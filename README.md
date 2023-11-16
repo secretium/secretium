@@ -19,8 +19,7 @@ Features:
 - Powered by the **Go** programming language, **Templ** & **htmx** libraries and **Tailwind** utility-first CSS framework;
 - Works with **AES** encryption algorithm for secure your data before storing it in the database;
 - **Does not depend** on the host GNU/Linux system, it runs completely in an isolated Docker container;
-- Supported automatic switching between the **light/dark** UI themes;
-- ...
+- Supported automatic switching between the **light/dark** UI themes.
 
 ## ⚡️ Quick start
 
