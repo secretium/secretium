@@ -20,7 +20,7 @@ Features:
 
 ## ⚡️ Quick start
 
-Here's minimal steps to run the **Secretium** on your local machine.
+Here's minimal steps to run the **Secretium** on your **local** machine.
 
 First of all, install [Docker][docker_install_url] with the [Compose][docker_compose_install_url] plugin.
 
@@ -38,10 +38,10 @@ echo "this-is-my-master-username" > secretium_master_username.txt
 echo "this-is-my-master-password-123" > secretium_master_password.txt
 ```
 
-Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **Secretium** website:
+Run the official [`quick-start.sh`][repo_quick_start_sh_url] script from the **Secretium** repository:
 
 ```bash
-wget -O - https://secretium.org/scripts/quick-start | bash
+wget -O - https://raw.githubusercontent.com/secretium/secretium/main/quick-start.sh | bash
 ```
 
 > [!NOTE]
@@ -49,7 +49,7 @@ wget -O - https://secretium.org/scripts/quick-start | bash
 
 Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and master password, which are defined in the previous steps.
 
-That's it! 🔥 Your smart self-hosted **Secretium** is ready to use!
+That's it! 🔥 Your **Secretium** container is up and running!
 
 ### 📦 Other ways to quick start
 
