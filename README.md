@@ -56,7 +56,7 @@ That's it! 🔥 Your **Secretium** container is up and running!
 
 ### 📦 Other ways to quick start
 
-Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
+Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS) packages from the [Releases][repo_releases_url] page.
 
 ## 📖 Complete user guide
 
@@ -78,7 +78,7 @@ Hope you find answers to all of your questions! 😉
 
 ## 🎯 Motivation to create
 
-Very often in the workflow there is a need to send some important information to friends or colleagues (access data, important messages and so on). Usually such data is sent in an open and unprotected form, in private messages in messenger or in a work chat room.
+Very often in the workflow there is a need to send some important information to friends or colleagues (access data, important messages and so on). Usually such data is sent in an open and unprotected form, in private messages in WhatsApp/Telegram/Slack or in a work chat room.
 
 The data hangs around in these channels forever until someone deletes it, making it questionable whether it's safe to store. Also, you have no control over this data, you can't tell for sure if your data will be shared with third parties.
 
