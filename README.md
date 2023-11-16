@@ -84,7 +84,7 @@ The data hangs around in these channels forever until someone deletes it, making
 
 💥 The **Secretium** project solves this problem! 💥
 
-Each secret created by **Secretium** has a time limit for unlocking — you no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
+Each secret created by **Secretium** is stored in the database in encrypted format using **AES** encryption algorithm and has a **time limit** for unlocking. You no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
 
 We developed this product originally for ourselves and have been using it for a long time within our development team and for communicating with external customers. That's why we took special care with the security of data storage and the look and feel of the UI and usability.
 
