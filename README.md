@@ -48,7 +48,7 @@ wget -O - https://raw.githubusercontent.com/secretium/secretium/main/quick-start
 ```
 
 > [!NOTE]
-> This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container on port `8787`, and remove the TXT files with the sensitive data after running container.
+> This script will automatically create a minimal `docker-compose.yml` file, create a folder for the database, run `docker-compose up -d` command to start the **Secretium** container (from the [official Docker image][docker_image_url]) on port `8787`, and remove the TXT files with the sensitive data after running container.
 
 Open your browser, visit `http://localhost:8787` and login to the admin dashboard with your master username and master password, which are defined in the previous steps.
 
