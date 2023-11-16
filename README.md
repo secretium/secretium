@@ -56,7 +56,7 @@ That's it! 🔥 Your **Secretium** container is up and running!
 
 ### 📦 Other ways to quick start
 
-Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS, Fedora) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
+Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
 
 ## 📖 Complete user guide
 
