@@ -55,12 +55,7 @@ That's it! 🔥 Your **Secretium** container is up and running!
 
 ### 📦 Other ways to quick start
 
-Feel free to using the **Secretium** project from the [official Docker image][docker_image_url] and run it manually in the isolated container in your pipelines.
-
-> [!WARNING]
-> This Docker image is available for GNU/Linux only (`amd64` and `arm64`, including [WSL][wsl_url]).
-
-Also, your can download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS, Fedora) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
+Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS, Fedora) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
 
 ## 📖 Complete user guide
 
@@ -82,7 +77,19 @@ Hope you find answers to all of your questions! 😉
 
 ## 🎯 Motivation to create
 
-...
+Very often in the workflow there is a need to send some important information to friends or colleagues (access data, important messages and so on). Usually such data is sent in an open and unprotected form, in private messages in messenger or in a work chat room.
+
+The data hangs around in these channels forever until someone deletes it, making it questionable whether it's safe to store. Also, you have no control over this data, you can't tell for sure if your data will be shared with third parties.
+
+The **Secretium** project solves this problem. It is installed on your server as an isolated Docker container and only you own your secrets!
+
+To transfer your data, all you have to do is log in to the beautiful administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
+
+Each secret created by Secretium has a time limit for unlocking — you no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
+
+We developed this product originally for ourselves and have been using it for a long time within our development team and for communicating with external customers. That's why we took special care with the security of data storage and the look and feel of the UI and usability.
+
+We can't wait for you to start using Secretium! ✨
 
 > [!NOTE]
 > Earlier, we have already saved the world twice, they were [Create Go App][cgapp_url] and [Gowebly][gowebly_url] (yep, that's our projects too). The GitHub stars statistics of these projects can't lie: more than **2.3k** developers of any level and different countries start a new project through these CLI tools.
