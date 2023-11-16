@@ -60,7 +60,7 @@ Download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS) packages
 
 ## 📖 Complete user guide
 
-We always treasure your time and want you to start building really great web products on this awesome technology stack as soon as possible! Therefore, to get a complete guide to use and understand the basic principles of the **Secretium** project, we have prepared a comprehensive explanation of the project in this 📖 [**Complete user guide**][docs_url].
+We always treasure your time and want you to start using a really great product as soon as possible! Therefore, to get a complete guide to use and understand the basic principles of the **Secretium** project, we have prepared a comprehensive explanation of the project in this 📖 [**Complete user guide**][docs_url].
 
 <a href="https://secretium.org" target="_blank" title="Go to the Secretium's Complete user guide"><img width="360px" alt="secretium docs banner" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-docs-banner.svg"></a>
 
