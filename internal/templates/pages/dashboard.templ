@@ -46,7 +46,11 @@ templ dashboardShareSecretHeader() {
 }
 
 templ Dashboard(options *templates.DashboardComponentOptions) {
-	<section id="dashboard-content">
+	<section
+ 		id="dashboard-content"
+ 		hx-trigger="keyup[altKey&amp;&amp;shiftKey&amp;&amp;keyCode==76] from:body"
+ 		hx-get="/api/user/logout"
+	>
 		<div hx-get="/api/user/logout" hx-trigger="every 1800s"></div>
 		<div class="grid grid-cols-3 gap-2">
 			<div class="col-span-2">
@@ -275,7 +279,7 @@ templ Dashboard(options *templates.DashboardComponentOptions) {
 						>
 							logout
 						</a>
-						from your account when you're done or just press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>R</kbd> on the keyboard.
+						from your account when you're done or just press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd> on the keyboard.
 					</p>
 				</div>
 		}

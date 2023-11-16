@@ -205,7 +205,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"dashboard-content\"><div hx-get=\"/api/user/logout\" hx-trigger=\"every 1800s\"></div><div class=\"grid grid-cols-3 gap-2\"><div class=\"col-span-2\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"dashboard-content\" hx-trigger=\"keyup[altKey&amp;&amp;shiftKey&amp;&amp;keyCode==76] from:body\" hx-get=\"/api/user/logout\"><div hx-get=\"/api/user/logout\" hx-trigger=\"every 1800s\"></div><div class=\"grid grid-cols-3 gap-2\"><div class=\"col-span-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -758,7 +758,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var65 := `Ctrl`
+			templ_7745c5c3_Var65 := `Alt`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var65)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -767,7 +767,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var66 := `/ `
+			templ_7745c5c3_Var66 := `+ `
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var66)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -776,7 +776,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var67 := `Cmd`
+			templ_7745c5c3_Var67 := `Shift`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var67)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -794,7 +794,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var69 := `R`
+			templ_7745c5c3_Var69 := `L`
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var69)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
