@@ -81,15 +81,15 @@ Very often in the workflow there is a need to send some important information to
 
 The data hangs around in these channels forever until someone deletes it, making it questionable whether it's safe to store. Also, you have no control over this data, you can't tell for sure if your data will be shared with third parties.
 
-The **Secretium** project solves this problem. It is installed on your server as an isolated Docker container and only you own your secrets!
+💥 The **Secretium** project solves this problem! 💥
 
-To transfer your data, all you have to do is log in to the beautiful administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
+It is installed on your server as an isolated Docker container and only you own your secrets. To transfer your data, all you have to do is login to the beautiful administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
 
-Each secret created by Secretium has a time limit for unlocking — you no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
+Each secret created by **Secretium** has a time limit for unlocking — you no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
 
 We developed this product originally for ourselves and have been using it for a long time within our development team and for communicating with external customers. That's why we took special care with the security of data storage and the look and feel of the UI and usability.
 
-We can't wait for you to start using Secretium! ✨
+We can't wait for you to start using **Secretium**! ✨
 
 > [!NOTE]
 > Earlier, we have already saved the world twice, they were [Create Go App][cgapp_url] and [Gowebly][gowebly_url] (yep, that's our projects too). The GitHub stars statistics of these projects can't lie: more than **2.3k** developers of any level and different countries start a new project through these CLI tools.
@@ -100,7 +100,7 @@ If you liked the **Secretium** project and found it useful for your tasks, pleas
 
 It really **motivates** us to make this product **even** better.
 
-...
+<img width="100%" alt="secretium give star" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-give-star.gif">
 
 And now, I invite you to participate in this project! Let's work **together** to create and popularize the **most useful** tool for developers on the web today.
 
@@ -110,10 +110,6 @@ And now, I invite you to participate in this project! Let's work **together** to
 - Say a few words about the project on your social networks and blogs (Dev.to, Medium, Хабр, and so on).
 
 Your PRs, issues & any words are welcome! Thank you 😘
-
-### 🌟 Stargazers
-
-...
 
 ## ⚠️ License
 
