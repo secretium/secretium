@@ -70,7 +70,11 @@ It is highly recommended to start exploring with short introductory articles "[*
 
 Next steps are:
 
-1. [Install the CLI to your system][docs_installation_url]
+1. [Prepare your remote server](https://secretium.org/complete-user-guide/prepare-remote-server)
+2. [Create files with sensitive data](https://secretium.org/complete-user-guide/create-files-with-sensitive-data)
+3. [Run installation script](https://secretium.org/complete-user-guide/run-installation-script)
+4. [Edit Docker Compose file](https://secretium.org/complete-user-guide/edit-docker-compose)
+5. [Run Secretium container](https://secretium.org/complete-user-guide/run-container)
 
 Hope you find answers to all of your questions! 😉
 
