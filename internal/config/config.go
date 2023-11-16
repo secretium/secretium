@@ -2,11 +2,8 @@ package config
 
 import (
 	"errors"
-	"fmt"
 	"os"
-	"slices"
 	"strconv"
-	"time"
 	_ "time/tzdata"
 
 	"github.com/secretium/secretium/internal/constants"
@@ -27,60 +24,9 @@ type server struct {
 
 // New returns a new instance of Config after validation.
 func New() (*Config, error) {
-	// Validate secret key.
-	if os.Getenv("SECRET_KEY") == "" {
-		return nil, errors.New(messages.ErrConfigSecretKeyEmpty)
-	}
-
-	// Validate length of the secret key.
-	if len(os.Getenv("SECRET_KEY")) < constants.ConstConfigSecretKeyMinLength {
-		return nil, fmt.Errorf(messages.ErrConfigSecretKeyLengthNotValid, constants.ConstConfigSecretKeyMinLength)
-	}
-
-	// Validate master username.
-	if os.Getenv("MASTER_USERNAME") == "" {
-		return nil, errors.New(messages.ErrConfigMasterUsernameEmpty)
-	}
-
-	// Validate length of the master username.
-	if len(os.Getenv("MASTER_USERNAME")) < constants.ConstConfigMasterUsernameMinLength ||
-		len(os.Getenv("MASTER_USERNAME")) > constants.ConstConfigMasterUsernameMaxLength {
-		return nil, fmt.Errorf(
-			messages.ErrConfigMasterUsernameLengthNotValid,
-			constants.ConstConfigMasterUsernameMinLength,
-			constants.ConstConfigMasterUsernameMaxLength,
-		)
-	}
-
-	// Validate master password.
-	if os.Getenv("MASTER_PASSWORD") == "" {
-		return nil, errors.New(messages.ErrConfigMasterPasswordEmpty)
-	}
-
-	// Validate length of the master password.
-	if len(os.Getenv("MASTER_PASSWORD")) < constants.ConstConfigMasterPasswordMinLength ||
-		len(os.Getenv("MASTER_PASSWORD")) > constants.ConstConfigMasterPasswordMaxLength {
-		return nil, fmt.Errorf(
-			messages.ErrConfigMasterPasswordLengthNotValid,
-			constants.ConstConfigMasterPasswordMinLength,
-			constants.ConstConfigMasterPasswordMaxLength,
-		)
-	}
-
-	// Check, if the domain URL is present.
-	if os.Getenv("DOMAIN") != "" {
-		// Validate domain URL.
-		if err := helpers.IsValidURL(os.Getenv("DOMAIN")); err != nil {
-			return nil, err
-		}
-	}
-
-	// Check, if the domain HTTP schema is present.
-	if os.Getenv("DOMAIN_SCHEMA") != "" {
-		// Validate domain HTTP schema.
-		if !slices.Contains([]string{"https", "http"}, os.Getenv("DOMAIN_SCHEMA")) {
-			return nil, errors.New(messages.ErrConfigDomainSchemaNotValid)
-		}
+	// Validate config.
+	if err := helpers.ConfigValidation(); err != nil {
+		return nil, err
 	}
 
 	// Validate server port.
@@ -99,11 +45,6 @@ func New() (*Config, error) {
 	writeTimeout, err := strconv.Atoi(helpers.Getenv("SERVER_WRITE_TIMEOUT", constants.ConstConfigServerWriteTimeout))
 	if err != nil {
 		return nil, errors.New(messages.ErrConfigServerWriteTimeoutNotValid)
-	}
-
-	// Validate server timezone.
-	if _, err := time.LoadLocation(helpers.Getenv("SERVER_TIMEZONE", constants.ConstConfigServerTimezone)); err != nil {
-		return nil, errors.New(messages.ErrConfigServerTimezoneNotValid)
 	}
 
 	return &Config{
