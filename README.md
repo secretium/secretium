@@ -1,21 +1,23 @@
-# Secretium – A smart self-hosted tool for sharing secrets to your friends
+<img width="256px" alt="secretium logo" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-logo-with-text.svg">
+
+# Secretium – A smart self-hosted tool for sharing secrets to your friends, colleagues, or anyone!
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
 [![Code coverage][go_code_coverage_img]][go_code_coverage_url]
 [![License][repo_license_img]][repo_license_url]
 
-A full description for the **Secretium** ...
+The **Secretium** project is a self-hosted tool for sharing secrets to your friends, colleagues, or anyone. The Open Source (or Community) edition of the project is a fully community-driven solution for personal use.
 
 Features:
 
 - 100% **free** and **Open Source** under the [Apache 2.0][repo_license_url] license;
-- Powered by the **Go** programming language, **Templ** & **htmx** libraries and **Tailwind** utility-first CSS framework;
-- Works with **AES** encryption algorithm for secure your secrets before storing it in the database;
-- **Does not depend** on the host OS, it runs completely in an isolated Docker container;
-- Supported automatic switching between the **light/dark** UI themes;
-- **Well-documented**, with a lot of tips and assists from the authors;
 - For **any** level of developer's knowledge and technical expertise;
+- [**Well-documented**][docs_url], with a lot of tips and assists from the authors;
+- Powered by the **Go** programming language, **Templ** & **htmx** libraries and **Tailwind** utility-first CSS framework;
+- Works with **AES** encryption algorithm for secure your data before storing it in the database;
+- **Does not depend** on the host GNU/Linux system, it runs completely in an isolated Docker container;
+- Supported automatic switching between the **light/dark** UI themes;
 - ...
 
 ## ⚡️ Quick start
@@ -58,7 +60,7 @@ Feel free to using the **Secretium** project from the [official Docker image][do
 > [!WARNING]
 > This Docker image is available for GNU/Linux only (`amd64` and `arm64`, including [WSL][wsl_url]).
 
-Also, the ready-made `exe` files for Windows, `deb`, `rpm`, `apk` or Arch Linux packages can be downloaded from the [Releases][repo_releases_url] page of this repository.
+Also, your can download a ready-made `deb` (for Debian, Ubuntu) and `rpm` (for CentOS, Fedora) packages from the [Releases][repo_releases_url] page. Install it like you normally would.
 
 ## 📖 Complete user guide
 
