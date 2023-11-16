@@ -35,18 +35,20 @@ release:
   mode: replace
   header: |
     ## ✨ The {{ .ProjectName }} `{{ .Tag }}` release
+
+    <img width="100%" alt="secretium banner" src="https://raw.githubusercontent.com/secretium/.github/main/images/secretium-project-banner.svg">
   footer: |
     ## How to update?
 
     For [Docker][docker_url] users (GNU/Linux only):
 
     ```console
-    docker pull truewebartisans/secretium:latest
+    docker pull secretium/secretium:latest
     ```
 
     For other ways (any platforms): manually download and re-install a ready-made package from the `Assets` section.
 
-    > 💡 Note: See the [Complete user guide][project_url] to get a general information.
+    > 💡 Note: See the [Complete user guide][docs_url] to get a general information.
 
     ## Your help to improve Secretium
 
@@ -55,7 +57,7 @@ release:
     - Creating tests and benchmarks for code;
     - Improving existing functions, structs, or tests;
     - Feature requests with interesting functions that would be good to add;
-    - Say a few words about the secretium on your social networks and blogs (Dev.to, Medium, Хабр, and so on).
+    - Say a few words about the project on your social networks and blogs (Dev.to, Medium, Хабр, and so on).
 
     Your PRs & issues are welcome! Thanks 😉
 
@@ -63,7 +65,7 @@ release:
 
     [brew_url]: https://brew.sh
     [docker_url]: https://www.docker.com
-    [project_url]: https://docs.secretium.org
+    [docs_url]: https://secretium.org
   disable: false
   skip_upload: false
 
@@ -73,8 +75,8 @@ dockers:
     use: buildx
     skip_push: auto
     image_templates:
-      - "truewebartisans/{{ .ProjectName }}:latest-amd64"
-      - "truewebartisans/{{ .ProjectName }}:{{ .Tag }}-amd64"
+      - "secretium/{{ .ProjectName }}:latest-amd64"
+      - "secretium/{{ .ProjectName }}:{{ .Tag }}-amd64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{ .Date }}"
@@ -89,8 +91,8 @@ dockers:
     use: buildx
     skip_push: auto
     image_templates:
-      - "truewebartisans/{{ .ProjectName }}:latest-arm64"
-      - "truewebartisans/{{ .ProjectName }}:{{ .Tag }}-arm64"
+      - "secretium/{{ .ProjectName }}:latest-arm64"
+      - "secretium/{{ .ProjectName }}:{{ .Tag }}-arm64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{ .Date }}"
@@ -102,22 +104,22 @@ dockers:
       - "--tls-verify=false"
 
 docker_manifests:
-  - name_template: "truewebartisans/{{ .ProjectName }}:latest"
+  - name_template: "secretium/{{ .ProjectName }}:latest"
     skip_push: auto
     image_templates:
-      - "truewebartisans/{{ .ProjectName }}:latest-amd64"
-      - "truewebartisans/{{ .ProjectName }}:latest-arm64"
-  - name_template: "truewebartisans/{{ .ProjectName }}:{{ .Tag }}"
+      - "secretium/{{ .ProjectName }}:latest-amd64"
+      - "secretium/{{ .ProjectName }}:latest-arm64"
+  - name_template: "secretium/{{ .ProjectName }}:{{ .Tag }}"
     skip_push: auto
     image_templates:
-      - "truewebartisans/{{ .ProjectName }}:{{ .Tag }}-amd64"
-      - "truewebartisans/{{ .ProjectName }}:{{ .Tag }}-arm64"
+      - "secretium/{{ .ProjectName }}:{{ .Tag }}-amd64"
+      - "secretium/{{ .ProjectName }}:{{ .Tag }}-arm64"
 
 nfpms:
   - maintainer: Vic Shóstak <koddr.me@gmail.com>
     description: |
-      A smart self-hosted tool for sharing secrets with your friends.
-    homepage: "https://github.com/truewebartisans/{{ .ProjectName }}"
+      A smart self-hosted tool for sharing secrets to your friends, colleagues, or anyone!
+    homepage: "https://github.com/secretium/{{ .ProjectName }}"
     license: Apache 2.0
     formats: [deb, rpm]
 
@@ -138,7 +140,7 @@ changelog:
     exclude: ["^*.md", "^*.ya?ml"]
   groups:
     - title: New features
-      regexp: ^.*?((A|a)dd)|((F|f)eature).*?$
+      regexp: ^.*?((A|a)dd)|(N|n)ew)|((F|f)eature).*?$
       order: 0
     - title: Bug fixes
       regexp: ^.*?((B|b)ug)|((F|f)ix).*?$
