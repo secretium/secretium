@@ -9,6 +9,8 @@
 
 The **Secretium** project is a self-hosted tool for sharing secrets to your friends, colleagues, or anyone. The Open Source (or Community) edition of the project is a fully community-driven solution for personal use.
 
+It is installed on your server as an **isolated** Docker container and only you own your secrets. To share your data, all you have to do is login to the **beautiful** administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
+
 Features:
 
 - 100% **free** and **Open Source** under the [Apache 2.0][repo_license_url] license;
@@ -83,13 +85,11 @@ The data hangs around in these channels forever until someone deletes it, making
 
 💥 The **Secretium** project solves this problem! 💥
 
-It is installed on your server as an isolated Docker container and only you own your secrets. To transfer your data, all you have to do is login to the beautiful administrative dashboard, create a secret, share the link and tell your friend the access code so that he/she can unlock it and see the data.
-
 Each secret created by **Secretium** has a time limit for unlocking — you no longer have to worry that some of your data can be accessed at any time. If you want the secret to become inaccessible immediately after the first unlocking, you have that option too!
 
 We developed this product originally for ourselves and have been using it for a long time within our development team and for communicating with external customers. That's why we took special care with the security of data storage and the look and feel of the UI and usability.
 
-We can't wait for you to start using **Secretium**! ✨
+We can't wait for you to start using **Secretium**!
 
 > [!NOTE]
 > Earlier, we have already saved the world twice, they were [Create Go App][cgapp_url] and [Gowebly][gowebly_url] (yep, that's our projects too). The GitHub stars statistics of these projects can't lie: more than **2.3k** developers of any level and different countries start a new project through these CLI tools.
