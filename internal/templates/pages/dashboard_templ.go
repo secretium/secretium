@@ -12,10 +12,10 @@ import "bytes"
 
 import "github.com/secretium/secretium/internal/templates"
 
-func copyShareURLToClipboard() templ.ComponentScript {
+func copyShareURLToClipboard(accessCode string) templ.ComponentScript {
 	return templ.ComponentScript{
-		Name: `__templ_copyShareURLToClipboard_2e48`,
-		Function: `function __templ_copyShareURLToClipboard_2e48(){// Get the text field.
+		Name: `__templ_copyShareURLToClipboard_84cc`,
+		Function: `function __templ_copyShareURLToClipboard_84cc(accessCode){// Get the text field.
 	var copyText = document.getElementById("share-url");
 
 	// Select the text field.
@@ -23,10 +23,16 @@ func copyShareURLToClipboard() templ.ComponentScript {
 	copyText.setSelectionRange(0, 99999); // for mobile devices
 
 	// Copy the text inside the text field.
-	navigator.clipboard.writeText(
-		` + "`" + `Hey, check out my secret! Go to ${copyText.value} and enter the access code to unlock it.` + "`" + `
-	);}`,
-		Call: templ.SafeScript(`__templ_copyShareURLToClipboard_2e48`),
+	if (accessCode === "") {
+        navigator.clipboard.writeText(
+            ` + "`" + `Hey, check out my secret! Go to ${copyText.value} and enter the access code to unlock it.` + "`" + `
+        );
+    } else {
+        navigator.clipboard.writeText(
+            ` + "`" + `Hey, check out my secret! Go to ${copyText.value} and enter the access code "${accessCode}" (without quotes) to unlock it.` + "`" + `
+        );
+    }}`,
+		Call: templ.SafeScript(`__templ_copyShareURLToClipboard_84cc`, accessCode),
 	}
 }
 
@@ -581,7 +587,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.RenderScriptItems(ctx, templ_7745c5c3_Buffer, copyShareURLToClipboard())
+			templ_7745c5c3_Err = templ.RenderScriptItems(ctx, templ_7745c5c3_Buffer, copyShareURLToClipboard(options.Data["AccessCode"]))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -589,7 +595,7 @@ func Dashboard(options *templates.DashboardComponentOptions) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var52 templ.ComponentScript = copyShareURLToClipboard()
+			var templ_7745c5c3_Var52 templ.ComponentScript = copyShareURLToClipboard(options.Data["AccessCode"])
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var52.Call)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
