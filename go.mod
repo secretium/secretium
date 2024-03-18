@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/a-h/templ v0.2.636
-	github.com/alexedwards/scs/v2 v2.7.0
+	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/boombuler/barcode v1.0.1
 	github.com/google/wire v0.6.0
 	github.com/jmoiron/sqlx v1.3.5
