@@ -3,7 +3,7 @@ module github.com/secretium/secretium
 go 1.21
 
 require (
-	github.com/a-h/templ v0.2.707
+	github.com/a-h/templ v0.2.731
 	github.com/alexedwards/scs/v2 v2.8.0
 	github.com/boombuler/barcode v1.0.1
 	github.com/google/wire v0.6.0
